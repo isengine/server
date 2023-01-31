@@ -36,7 +36,7 @@ services:
       - network
 
   php:
-    image: php:8-fpm-alpine
+    build: ./dev/php/
     container_name: php
     restart: unless-stopped
     environment:
