@@ -663,6 +663,14 @@ exit
 Ctrl + C
 ```
 
+Раскомментировать необходимые расширения в файле **php.ini** в каталоге **./php/**. Например:
+
+```
+;extension=mbstring.so
+extension=mysqli.so
+extension=pdo_mysql.so
+```
+
 И перезагрузить контейнеры
 
 ```shell script
@@ -676,7 +684,7 @@ docker restart nginx
 php -v
 ```
 
-Посмотреть установленные расширения php:
+Посмотреть расширения php:
 
 ```shell script
 php -m
