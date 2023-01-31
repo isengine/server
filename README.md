@@ -17,6 +17,6 @@
 - postgres
 - mongo
 
-[Открыть справочник](https://github.com/isengine/localdev/dev/README.md);
+[Открыть справочник](https://github.com/isengine/localdev/blob/master/dev/README.md);
 
 Local development server for web projects based on docker containers.
