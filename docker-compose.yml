@@ -7,10 +7,6 @@ services:
     volumes:
       - ./:/var/www
     working_dir: /var/www
-    command: >
-      bash -c "cp -r -f /var/www/custom/. /var/www/public
-      && yarn
-      && quasar dev"
     depends_on:
       - php
     ports:
