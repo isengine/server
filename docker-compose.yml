@@ -26,8 +26,8 @@ services:
       - TZ=${WORKSPACE_TIMEZONE}
     volumes:
       - ./:/var/www
-      - ./dev/nginx/conf.d:/etc/nginx/conf.d
-      - ./dev/nginx/logs:/var/log/nginx
+      - ./lds/nginx/conf.d:/etc/nginx/conf.d
+      - ./lds/nginx/logs:/var/log/nginx
     depends_on:
       - php 
     ports:
@@ -36,7 +36,7 @@ services:
       - network
 
   php:
-    build: ./dev/php/
+    build: ./lds/php/
     container_name: php
     restart: unless-stopped
     environment:
@@ -47,9 +47,9 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - ./:/var/www
-      - ./dev/.ssh:~/.ssh
-      - ./dev/php/php.ini:/usr/local/etc/php/php.ini
-      - ./dev/php/supervisor.d:/etc/supervisor.d
+      - ./lds/.ssh:~/.ssh
+      - ./lds/php/php.ini:/usr/local/etc/php/php.ini
+      - ./lds/php/supervisor.d:/etc/supervisor.d
     working_dir: /var/www/
     depends_on:
       - mysql
@@ -97,10 +97,10 @@ services:
       - TZ=${WORKSPACE_TIMEZONE}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
-      - ./dev/mysql/data:/var/lib/mysql
-      - ./dev/mysql/conf.d:/etc/mysql/conf.d
-      - ./dev/mysql/logs:/var/log/mysql
-      - ./dev/mysql/dump:/dump
+      - ./lds/mysql/data:/var/lib/mysql
+      - ./lds/mysql/conf.d:/etc/mysql/conf.d
+      - ./lds/mysql/logs:/var/log/mysql
+      - ./lds/mysql/dump:/dump
     command: --default-authentication-plugin=mysql_native_password --skip_name_resolve
     ports:
       - ${MYSQL_PORT}:3306
