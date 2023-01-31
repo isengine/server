@@ -32,7 +32,7 @@ services:
       - network
 
   php:
-    build: ./lds/php/
+    build: ./lds/php
     container_name: php
     restart: unless-stopped
     environment:
@@ -43,7 +43,7 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - ./:/var/www
-      - ./lds/.ssh:~/.ssh
+      - ./lds/.ssh:/.ssh
       - ./lds/php/php.ini:/usr/local/etc/php/php.ini
       - ./lds/php/supervisor.d:/etc/supervisor.d
     working_dir: /var/www/

@@ -85,9 +85,10 @@ cp docker-compose.yml ../
 cp Dockerfile ../
 ```
 
-**5**. Соберите проект
+**5**. Соберите проект из каталогавашего проекта
 
 ```shell script
+cd ..
 docker-compose up --build
 # с флагом -d консоль не заблокируется, но и вывод информации будет ограничен
 docker-compose up --build -d
@@ -100,9 +101,20 @@ docker-compose up --build -d
 docker-compose start
 # остановка
 docker-compose stop
+# подключение к контейнерам
+docker-compose exec nodejs bash
+docker-compose exec php bash
 ```
 
-В случае возникновения ошибок, необходимости изменить конфигурацию сервера и возникновении прочих вопросов, смотрите полное руководство.
+Вывод проекта через node.js на 8080 порт: http://localhost:8080
+
+Вывод статики из каталога "./public/" через сервер nginx + php-fpm на 80 порт: http://localhost
+
+phpMyAdmin работает на 8000 порту: http://localhost:8000
+
+Adminer работает на 8800 порту: http://localhost:8800
+
+> В случае возникновения ошибок, необходимости изменить конфигурацию сервера и возникновении прочих вопросов, смотрите полное руководство.
 
 [^ к оглавлению](#оглавление)
 
@@ -602,7 +614,7 @@ PING docker.for.mac.localhost (192.168.65.2): 56 data bytes
 Создать SSH-ключи можно при помощи следующей команды:
 
 ```shell script
-ssh-keygen -f ./.ssh/id_rsa -t rsa -b 2048 -C "your-name@example.com"
+ssh-keygen -f /.ssh/id_rsa -t rsa -b 2048 -C "your-name@example.com"
 ```
 
 Вместо **your-name@example.com** укажите свой email. 
@@ -632,6 +644,10 @@ http://localhost
 phpMyAdmin работает на 8000 порту.
 
 http://localhost:8000
+
+Adminer работает на 8800 порту.
+
+http://localhost:8800
 
 [^ к оглавлению](#оглавление)
 
@@ -854,7 +870,7 @@ MYSQL_PASSWORD=1234
 
 Для работы в консоли вам подойдет следующая инструкция.
 
-> Обратите внимания, что вместо переменных окружения вам нужно будет поставить их значения. Например, вместо
+> Обратите внимание, что вместо переменных окружения вам нужно будет поставить их значения. Например, вместо
 
 ```
 CREATE DATABASE `_MYSQL_DB_`;
