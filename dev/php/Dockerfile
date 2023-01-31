@@ -1,7 +1,7 @@
 FROM php:8-fpm-alpine
 
-# RUN apk --update
-# 
+RUN apk update && apk add -f bash git curl zip vim unzip composer openssh
+
 # RUN apk add --no-cache bash mysql-client msmtp perl wget procps shadow libzip libpng libjpeg-turbo libwebp freetype icu \
 #     libintl patch acl git gettext-dev libcurl libxml2-dev openssh-client pcre-dev su-exec build-base oniguruma-dev \
 #     gmp-dev postgresql-dev gettext gettext-dev

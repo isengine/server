@@ -51,8 +51,6 @@ services:
       - ./dev/php/php.ini:/usr/local/etc/php/php.ini
       - ./dev/php/supervisor.d:/etc/supervisor.d
     working_dir: /var/www/
-    command: >
-      sh -c "apk update && apk add -f bash git curl zip vim unzip composer openssh"
     depends_on:
       - mysql
     networks:
