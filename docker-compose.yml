@@ -4,6 +4,7 @@ services:
 
   nodejs:
     build: .
+    container_name: nodejs
     volumes:
       - ./:/var/www
     working_dir: /var/www
@@ -57,7 +58,8 @@ services:
       - network
 
   adminer:
-    image: adminer:fastcgi
+    image: adminer
+    container_name: adminer
     restart: always
     environment:
       - ADMINER_PLUGINS=${ADMINER_PLUGINS}
