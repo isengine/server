@@ -9,6 +9,7 @@ services:
     working_dir: /var/www
     command: >
       bash -c "cp -r -f /var/www/custom/. /var/www/public
+      && yarn
       && quasar dev"
     depends_on:
       - php
@@ -112,8 +113,8 @@ services:
     environment:
       - TZ=${WORKSPACE_TIMEZONE}
     volumes:
-      - ./redis/data:/var/lib/redis
-      - ./redis/conf:/usr/local/etc/redis/redis.conf
+      - ./lds/redis/data:/var/lib/redis
+      - ./lds/redis/conf:/usr/local/etc/redis/redis.conf
     ports:
       - "${REDIS_PORT}:6379"
     networks:
@@ -129,8 +130,8 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
-      - ./postgres/data:/var/lib/postgresql/data
-      - ./postgres/dump:/dump
+      - ./lds/postgres/data:/var/lib/postgresql/data
+      - ./lds/postgres/dump:/dump
     ports:
       - "${POSTGRES_PORT}:5432"
     networks:
@@ -142,9 +143,9 @@ services:
     environment:
       - TZ=${WORKSPACE_TIMEZONE}
     volumes:
-      - ./mongo/db:/data/db
-      - ./mongo/configdb:/data/configdb
-      - ./mongo/dump:/dump
+      - ./lds/mongo/db:/data/db
+      - ./lds/mongo/configdb:/data/configdb
+      - ./lds/mongo/dump:/dump
     ports:
       - "${MONGO_PORT}:27017"
     networks:
