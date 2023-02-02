@@ -62,7 +62,9 @@ services:
     container_name: adminer
     restart: always
     environment:
-      - ADMINER_PLUGINS=${ADMINER_PLUGINS}
+      - ADMINER_DEFAULT_SERVER=${MYSQL_HOST}
+    volumes:
+      - ./adminer:/etc/php/7.4/fpm/conf.d
     depends_on:
       - mysql
     ports:
