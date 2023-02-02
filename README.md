@@ -63,7 +63,7 @@ git clone https://github.com/isengine/lds
 # windows power shell
 remove-item lds/* -include .gitkeep -recurse
 # linux
-rm -rf .gitkeep
+find lds/ -name ".gitkeep" | xargs rm
 ```
 
 **4**. Переместите или скопируйте файлы
@@ -78,12 +78,14 @@ Dockerfile
 
 ```shell script
 # windows power shell
-cp lds/.env,lds/docker-compose.yml,lds/Dockerfile tds/
+cp lds/.env,lds/docker-compose.yml,lds/Dockerfile ./
 # linux
-cp lds/{.env,docker-compose.yml,Dockerfile} tds/
+cp lds/{.env,docker-compose.yml,Dockerfile} ./
 ```
 
 **5**. Соберите проект из каталога вашего проекта
+
+> Возможно, для корректной работы придется настроить переменные окружения, сервисы docker и связь с базой данных.
 
 ```shell script
 docker-compose up --build
@@ -103,8 +105,6 @@ docker-compose exec nodejs bash
 docker-compose exec php bash
 ```
 
-> Возможно, для корректной работы придется настроить связь с базой данных.
-
 Вывод проекта через node.js на 8080 порт: http://localhost:8080
 
 Вывод статики из каталога "./public/" через сервер nginx + php-fpm на 80 порт: http://localhost
@@ -113,7 +113,7 @@ phpMyAdmin работает на 8000 порту: http://localhost:8000
 
 Adminer работает на 8800 порту: http://localhost:8800
 
-> В случае возникновения ошибок, необходимости изменить конфигурацию сервера и возникновении прочих вопросов, смотрите полное руководство.
+> В случае необходимости изменить конфигурацию сервера, возникновения ошибок и прочих вопросов, смотрите полное руководство.
 
 [^ к оглавлению](#оглавление)
 
@@ -837,7 +837,7 @@ command: bash -c "quasar dev"
 fastcgi_pass php:9000;
 ```
 
-этой строкой Nginx понимает, где расположен сервер с php. Контейнер с php по умолчанию расположен на 9000 порту, php - это имя сервиса, которое мы задали в файле docker-compose.yml.
+этой строкой Nginx понимает, где расположен сервер с php. Контейнер с php по умолчанию расположен на 9000 порту, php - это имя сервиса, которое мы задали в файле **docker-compose.yml**.
 
 Также через настройки контейнера мы передаем в контейнер php настройки MySQL из переменных среды для подключения к базе. В php потом их можно взять из глобального массива $_ENV.
 
@@ -936,7 +936,7 @@ phpMyAdmin запускается в отдельном контейнере с 
 
 Настройку базы можно производить в phpMyAdmin или через консоль.
 
-Имя сервера mysql указано в файле .env
+Имя сервера mysql указано в файле **.env**
 
 ```
 MYSQL_HOST=mysql
@@ -948,7 +948,7 @@ MYSQL_HOST=mysql
 root
 ```
 
-Там же, в файле .env, задан пароль для root
+Там же, в файле **.env**, задан пароль для root
 
 ```
 MYSQL_ROOT_PASSWORD=1234
