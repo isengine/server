@@ -94,6 +94,8 @@ docker-compose up --build
 docker-compose up --build -d
 ```
 
+Если консоль не заблокирована, в ней будет отображаться вся информация по операциям в среде разработке, включая запросы к сервисам, текущее состояние контейнеров и т.д.
+
 Дальнейшие команды для работы:
 
 ```shell script
@@ -101,9 +103,10 @@ docker-compose up --build -d
 docker-compose start
 # остановка
 docker-compose stop
+# перезапуск контейнера
+docker-compose restart CONTAINER_NAME
 # подключение к контейнерам
-docker-compose exec nodejs bash
-docker-compose exec php bash
+docker-compose exec CONTAINER_NAME bash
 ```
 
 Вывод проекта через node.js на 8080 порт: http://localhost:8080
@@ -823,6 +826,14 @@ command: bash -c "quasar dev"
 ```
 
 Тогда они будут выполняться сами при каждой сборке среды.
+
+Перезапустить контейнер можно из командной строки. При этом все команды будут выполняться автоматически.
+
+```shell script
+docker restart nodejs
+# или
+docker-compose restart nodejs
+```
 
 > Если контейнер nodejs не будет занят каким-либо процессом, он автоматически завершится.
 
