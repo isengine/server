@@ -39,6 +39,7 @@ LDS - сокращенно от local development server, локальный с�
   - [Настройка Adminer](#настройка-adminer)
   - [Настройка phpMyAdmin](#настройка-phpmyadmin)
   - [Настройка MySQL](#настройка-mysql)
+  - [Настройка PostgreSQL](#настройка-postgresql)
   - [Дамп MySQL](#дамп-mysql)
   - [Дамп PostgreSQL](#дамп-postgresql)
   - [Дамп MongoDB](#дамп-mongodb)
@@ -135,9 +136,10 @@ Adminer работает на 8800 порту: http://localhost:8800
   - composer
 - adminer
 - phpmyadmin
+- pgadmin
 - mysql
-- redis
 - postgres
+- redis
 - mongo
 
 [^ к оглавлению](#оглавление)
@@ -413,6 +415,12 @@ docker-compose up --build -d
 docker-compose down
 ```
 
+Перезапуск:
+
+```shell script
+docker-compose restart
+```
+
 Обычный запуск:
 
 ```shell script
@@ -425,6 +433,20 @@ docker-compose start
 
 ```shell script
 docker-compose stop
+```
+
+Посмотреть статистику:
+
+```shell script
+docker-compose ps
+```
+
+> Для того, чтобы управлять одним сервисом или контейнером, нужно после комманды ввести его имя.
+
+Например:
+
+```shell script
+docker-compose up --build CONTAINER_NAME
 ```
 
 Подключение к контейнеру:
@@ -441,12 +463,6 @@ docker exec -it CONTAINER_NAME sh (или bash, если установлен)
 docker exec -it CONTAINER_NAME COMMAND
 # например, посмотреть версию php из контейнера php
 docker exec -it php php -v
-```
-
-Чистим докер:
-
-```shell script
-docker system prune --volumes --all
 ```
 
 Список контейнеров:
@@ -491,6 +507,12 @@ docker images
 
 ```shell script
 docker rmi $(docker images -q)
+```
+
+Чистим докер:
+
+```shell script
+docker system prune --volumes --all
 ```
 
 [^ к оглавлению](#оглавление)
@@ -1042,6 +1064,45 @@ GRANT ALL PRIVILEGES ON `_MYSQL_DB_` . * TO '_MYSQL_USER_'@'%';
 REVOKE ALL PRIVILEGES, GRANT OPTION FROM '_MYSQL_USER_'@'%';
 DROP USER '_MYSQL_USER_'@'%';
 ```
+
+[^ к оглавлению](#оглавление)
+
+## Настройка PostgreSQL
+
+База данных postgre задается следующими переменными окружения:
+
+```
+POSTGRES_HOST=postgres
+POSTGRES_DB=postgres
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=secret
+POSTGRES_PORT=5432
+```
+
+Управлять базой можно через два интерфейса:
+
+- Adminer
+- PgAdmin
+
+и через командную строку, подключившись:
+
+```shell script
+docker-compose exec -it postgres sh
+```
+
+PgAdmin доступен по порту, заданному в переменной окружения
+
+```
+PGADMIN_PORT=8900
+```
+
+Чтобы подключиться через PgAdmin, вам понадобится ввести email root-пользователя. Этот email задан по-умолчанию из переменной окружения с добавлением хоста и **.sql** на конце.
+
+```
+POSTGRES_USER@POSTGRES_HOST.sql
+```
+
+Дальше вам понадобится добавить сервер, где указать данные из переменных окружения.
 
 [^ к оглавлению](#оглавление)
 
