@@ -21,6 +21,8 @@ RUN apk update && apk add -f bash \
 
 RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype
 
+RUN apk update
+
 RUN docker-php-ext-install pdo \
     pgsql \
     pdo_pgsql \
