@@ -64,7 +64,7 @@ services:
     environment:
       - ADMINER_DEFAULT_SERVER=${MYSQL_HOST}
     volumes:
-      - ./adminer:/etc/php/7.4/fpm/conf.d
+      - ./lds/adminer:/etc/php/7.4/fpm/conf.d
     depends_on:
       - mysql
     ports:
