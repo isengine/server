@@ -64,7 +64,7 @@ services:
     environment:
       - ADMINER_DEFAULT_SERVER=${MYSQL_HOST}
     volumes:
-      - ./lds/adminer:/etc/php/7.4/fpm/conf.d
+      - ./lds/adminer:/etc/php/7.4/cli/conf.d
     depends_on:
       - mysql
     ports:
@@ -79,10 +79,9 @@ services:
     environment:
       - TZ=${WORKSPACE_TIMEZONE}
       - PMA_ARBITRARY=1
-      - UPLOAD_LIMIT=${UPLOAD_LIMIT}
-      - MEMORY_LIMIT=${MEMORY_LIMIT}
-      - MAX_EXECUTION_TIME=${MAX_EXECUTION_TIME}
       - MYSQL_HOST=${MYSQL_HOST}
+    volumes:
+      - ./lds/phpmyadmin:/usr/local/etc/php/conf.d
     depends_on:
       - mysql
     ports:

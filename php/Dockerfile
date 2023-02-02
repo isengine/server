@@ -1,6 +1,50 @@
 FROM php:8-fpm-alpine
 
-RUN apk update && apk add -f bash git curl zip vim unzip composer openssh
+RUN apk update && apk add -f bash \
+    git \
+    curl \
+    zip \
+    vim \
+    unzip \
+    composer \
+    openssh \
+    libpq-dev \
+    icu \
+    icu-dev \
+    icu-libs \
+    libjpeg-turbo-dev \
+    libpng-dev \
+    libwebp-dev \
+    freetype-dev \
+    libzip-dev \
+    zlib
+
+RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype
+
+RUN docker-php-ext-install pdo \
+    pgsql \
+    pdo_pgsql \
+    mysqli \
+    pdo_mysql \
+    bz2 \
+    ctype \
+    curl \
+    fileinfo \
+    ftp \
+    gd \
+    iconv \
+    intl \
+    json \
+    mbstring \
+    mysqlnd \
+    openssl \
+    pcntl \
+    phar \
+    posix \
+    readline \
+    sqlite3 \
+    tokenizer \
+    zip
 
 # RUN apk add --no-cache bash mysql-client msmtp perl wget procps shadow libzip libpng libjpeg-turbo libwebp freetype icu \
 #     libintl patch acl git gettext-dev libcurl libxml2-dev openssh-client pcre-dev su-exec build-base oniguruma-dev \
@@ -24,10 +68,6 @@ RUN apk update && apk add -f bash git curl zip vim unzip composer openssh
 #     docker-php-ext-install soap && \
 #     docker-php-ext-install xml && \
 #     docker-php-ext-install gmp && \
-#     docker-php-ext-install pdo_pgsql && \
-#     docker-php-ext-install mysqli && \
-#     docker-php-ext-install pdo_mysql && \
-#     docker-php-ext-install opcache && \
 #     docker-php-ext-install exif && \
 #     docker-php-ext-install zip && \
 #     apk del build-essentials && rm -rf /usr/src/php*
