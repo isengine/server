@@ -71,9 +71,10 @@ find lds/ -name ".gitkeep" | xargs rm
 **4**. Переместите или скопируйте файлы
 
 ```
-.env
-docker-compose.yml
-Dockerfile
+lds
+├── .env
+├── docker-compose.yml
+└── Dockerfile
 ```
 
 Из каталога **lds** среды разработки в каталог с вашим проектом.
