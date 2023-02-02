@@ -19,8 +19,6 @@ RUN apk update && apk add -f bash \
     libzip-dev \
     zlib
 
-RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype
-
 RUN apk update
 
 RUN docker-php-ext-install pdo \
@@ -30,23 +28,16 @@ RUN docker-php-ext-install pdo \
     pdo_mysql \
     bz2 \
     ctype \
-    curl \
     fileinfo \
     ftp \
     gd \
-    iconv \
     intl \
-    json \
-    mbstring \
-    mysqlnd \
-    openssl \
     pcntl \
     phar \
     posix \
-    readline \
-    sqlite3 \
-    tokenizer \
     zip
+
+RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype
 
 # RUN apk add --no-cache bash mysql-client msmtp perl wget procps shadow libzip libpng libjpeg-turbo libwebp freetype icu \
 #     libintl patch acl git gettext-dev libcurl libxml2-dev openssh-client pcre-dev su-exec build-base oniguruma-dev \
