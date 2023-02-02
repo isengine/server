@@ -388,6 +388,12 @@ https://docs.docker.com/desktop/install/linux-install/
 
 Docker под Linux по-умолчанию НЕ включает в себя docker-compose. Поэтому ставить его нужно отдельно.
 
+> Под Linux комманды docker нужно вводить из-под суперпользователя, например:
+
+```shell script
+sudo docker-compose up --build
+```
+
 [^ к оглавлению](#оглавление)
 
 ## Управление
