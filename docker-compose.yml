@@ -4,7 +4,6 @@ services:
 
   nodejs:
     build: .
-    container_name: nodejs
     volumes:
       - ./:/var/www
     working_dir: /var/www
@@ -13,13 +12,12 @@ services:
       && yarn
       && quasar dev"
     ports:
-      - 8080:8080
+      - ${NODEJS_PORT}:8080
     networks:
       - network
 
   nginx:
     image: nginx:stable-alpine
-    container_name: nginx
     restart: unless-stopped
     environment:
       - TZ=${WORKSPACE_TIMEZONE}
@@ -28,15 +26,16 @@ services:
       - ./lds/nginx/conf.d:/etc/nginx/conf.d
       - ./lds/nginx/logs:/var/log/nginx
     depends_on:
-      - php 
+      - php
+      - mysql
+      - adminer
     ports:
-      - 80:80
+      - ${NGINX_PORT}:80
     networks:
       - network
 
   php:
     build: ./lds/php
-    container_name: php
     restart: unless-stopped
     environment:
       - TZ=${WORKSPACE_TIMEZONE}
@@ -51,7 +50,6 @@ services:
 
   adminer:
     image: adminer
-    container_name: adminer
     restart: always
     environment:
       - ADMINER_DEFAULT_SERVER=${MYSQL_HOST}
@@ -64,7 +62,6 @@ services:
 
   mysql:
     image: mysql:8.0.29
-    container_name: ${MYSQL_HOST}
     hostname: ${MYSQL_HOST}
     restart: unless-stopped
     security_opt:
@@ -87,7 +84,6 @@ services:
 
   phpmyadmin:
     image: phpmyadmin:latest
-    container_name: phpmyadmin
     restart: unless-stopped
     environment:
       - TZ=${WORKSPACE_TIMEZONE}
@@ -102,7 +98,6 @@ services:
 
   postgres:
     image: postgres:alpine
-    container_name: ${POSTGRES_HOST}
     hostname: ${POSTGRES_HOST}
     environment:
       - TZ=${WORKSPACE_TIMEZONE}
@@ -121,7 +116,6 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: pgadmin
     environment:
       - PGADMIN_DEFAULT_EMAIL=${POSTGRES_USER}@${POSTGRES_HOST}.sql
       - PGADMIN_DEFAULT_PASSWORD=${POSTGRES_PASSWORD}
@@ -132,7 +126,6 @@ services:
 
   redis:
     image: redis:latest
-    container_name: ${REDIS_HOST}
     environment:
       - TZ=${WORKSPACE_TIMEZONE}
     volumes:
@@ -147,7 +140,6 @@ services:
 
   redis-commander:
     image: rediscommander/redis-commander:latest
-    container_name: redis-commander
     hostname: redis-commander
     restart: always
     environment:
@@ -159,7 +151,6 @@ services:
 
   mongo:
     image: mongo:4.2
-    container_name: mongo
     environment:
       - TZ=${WORKSPACE_TIMEZONE}
     volumes:
