@@ -8,8 +8,7 @@ services:
       - ./:/var/www
     working_dir: /var/www
     command: >
-      bash -c "cp -r -f /var/www/custom/. /var/www/public
-      && yarn
+      bash -c "yarn
       && quasar dev"
     ports:
       - ${NODEJS_PORT}:8080
