@@ -1284,23 +1284,23 @@ mongorestore -d database_name /dump/databases/database_name
 
 ```
 ├── project1
-|   ├── lds
-|   ├── public
-|   ├── src
-|   ├── ...
-|   ├── .env
-|   ├── docker-compose.yml
-|   ├── Dockerfile
-|   └── ...
+│   ├── lds
+│   ├── public
+│   ├── src
+│   ├── ...
+│   ├── .env
+│   ├── docker-compose.yml
+│   ├── Dockerfile
+│   └── ...
 ├── project2
-|   ├── lds
-|   ├── public
-|   ├── src
-|   ├── ...
-|   ├── .env
-|   ├── docker-compose.yml
-|   ├── Dockerfile
-|   └── ...
+│   ├── lds
+│   ├── public
+│   ├── src
+│   ├── ...
+│   ├── .env
+│   ├── docker-compose.yml
+│   ├── Dockerfile
+│   └── ...
 ```
 
 Теперь должно стать:
@@ -1308,13 +1308,13 @@ mongorestore -d database_name /dump/databases/database_name
 ```
 ├── lds
 ├── project1
-|   ├── public
-|   ├── src
-|   └── ...
+│   ├── public
+│   ├── src
+│   └── ...
 ├── project2
-|   ├── public
-|   ├── src
-|   └── ...
+│   ├── public
+│   ├── src
+│   └── ...
 ├── .env
 ├── docker-compose.yml
 └── Dockerfile
