@@ -25,11 +25,26 @@ services:
       - ./lds/nginx/conf.d:/etc/nginx/conf.d
       - ./lds/nginx/logs:/var/log/nginx
     depends_on:
-      - php
       - mysql
+      - postgres
       - adminer
     ports:
       - ${NGINX_PORT}:80
+    networks:
+      - network
+
+  python:
+    build: ./lds/python
+    restart: unless-stopped
+    environment:
+      - TZ=${WORKSPACE_TIMEZONE}
+    volumes:
+      - ./:/var/www
+    working_dir: /var/www/
+    depends_on:
+      - nginx
+    ports:
+      - 8000:8000
     networks:
       - network
 
@@ -44,6 +59,10 @@ services:
       - ./lds/php/php-ini:/usr/local/etc/php/conf.d
       - ./lds/php/supervisor.d:/etc/supervisor.d
     working_dir: /var/www/
+    depends_on:
+      - nginx
+    ports:
+      - 9000:9000
     networks:
       - network
 
