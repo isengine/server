@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+
+  static:
+    build: .
+    restart: unless-stopped
+    volumes:
+      - ../../project/static:/var/www
+    working_dir: /var/www
+    command: bash -c "yarn && yarn start"
+    ports:
+      - 8080:8080
+    networks:
+      - network
+
+networks:
+  network:
+    name: prod_network
+    external: true

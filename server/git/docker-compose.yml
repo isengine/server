@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+
+  git:
+    image: gitlab/gitlab-ce:latest
+    hostname: git.example.com
+    restart: always
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        # Add any other gitlab.rb configuration here, each on its own line
+        gitlab_rails['gitlab_shell_ssh_port'] = 10022
+        nginx['listen_https'] = false
+    volumes:
+      - ./config:/etc/gitlab
+      - ./logs:/var/log/gitlab
+      - ./data:/var/opt/gitlab
+    ports:
+      - 10080:80
+      - 10443:443
+      - 10022:22
+    shm_size: 256m

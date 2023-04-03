@@ -2,186 +2,91 @@ version: "3"
 
 services:
 
-  nodejs:
-    build: .
-    volumes:
-      - ./:/var/www
-    working_dir: /var/www
-    command: >
-      bash -c "yarn
-      && quasar dev"
-    ports:
-      - ${NODEJS_PORT}:8080
-    networks:
-      - network
+  api:
+    extends:
+      file: ./server/api/docker-compose.yml
+      service: api
+
+  auth:
+    extends:
+      file: ./server/auth/docker-compose.yml
+      service: auth
+
+  static:
+    extends:
+      file: ./server/static/docker-compose.yml
+      service: static
 
   nginx:
-    image: nginx:stable-alpine
-    restart: unless-stopped
-    environment:
-      - TZ=${WORKSPACE_TIMEZONE}
-    volumes:
-      - ./:/var/www
-      - ./lds/nginx/conf.d:/etc/nginx/conf.d
-      - ./lds/nginx/logs:/var/log/nginx
-    depends_on:
-      - mysql
-      - postgres
-      - adminer
-    ports:
-      - ${NGINX_PORT}:80
-    networks:
-      - network
+    extends:
+      file: ./server/nginx/docker-compose.yml
+      service: nginx
 
   python:
-    build: ./lds/python
-    restart: unless-stopped
-    environment:
-      - TZ=${WORKSPACE_TIMEZONE}
-      - PYTHONDONTWRITEBYTECODE=1
-      - PYTHONUNBUFFERED=1
-    volumes:
-      - ./:/var/www
-    working_dir: /var/www/
-    depends_on:
-      - nginx
-    ports:
-      - 8000:8000
-    networks:
-      - network
+    extends:
+      file: ./server/python/docker-compose.yml
+      service: python
 
   php:
-    build: ./lds/php
-    restart: unless-stopped
-    environment:
-      - TZ=${WORKSPACE_TIMEZONE}
-    volumes:
-      - ./:/var/www
-      - ./lds/.ssh:/.ssh
-      - ./lds/php/php-ini:/usr/local/etc/php/conf.d
-      - ./lds/php/supervisor.d:/etc/supervisor.d
-    working_dir: /var/www/
-    depends_on:
-      - nginx
-    ports:
-      - 9000:9000
-    networks:
-      - network
+    extends:
+      file: ./server/php/docker-compose.yml
+      service: php
 
   adminer:
-    image: adminer
-    restart: always
-    environment:
-      - ADMINER_DEFAULT_SERVER=${MYSQL_HOST}
-    volumes:
-      - ./lds/adminer:/etc/php/7.4/cli/conf.d
-    ports:
-      - ${ADMINER_PORT}:8080
-    networks:
-      - network
+    extends:
+      file: ./server/db/docker-compose.yml
+      service: adminer
 
   mysql:
-    image: mysql:8.0.29
-    hostname: ${MYSQL_HOST}
-    restart: unless-stopped
-    security_opt:
-      - seccomp:unconfined
-    environment:
-      - TZ=${WORKSPACE_TIMEZONE}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    volumes:
-      - ./lds/mysql/data:/var/lib/mysql
-      - ./lds/mysql/conf.d:/etc/mysql/conf.d
-      - ./lds/mysql/logs:/var/log/mysql
-      - ./lds/mysql/dump:/dump
-    command: --default-authentication-plugin=mysql_native_password --skip_name_resolve
-    depends_on:
-      - phpmyadmin
-    ports:
-      - ${MYSQL_PORT}:3306
-    networks:
-      - network
+    extends:
+      file: ./server/db/docker-compose.yml
+      service: mysql
 
   phpmyadmin:
-    image: phpmyadmin:latest
-    restart: unless-stopped
-    environment:
-      - TZ=${WORKSPACE_TIMEZONE}
-      - PMA_ARBITRARY=1
-      - MYSQL_HOST=${MYSQL_HOST}
-    volumes:
-      - ./lds/phpmyadmin:/usr/local/etc/php/conf.d
-    ports:
-      - ${PHPMYADMIN_PORT}:80
-    networks:
-      - network
+    extends:
+      file: ./server/db/docker-compose.yml
+      service: phpmyadmin
 
   postgres:
-    image: postgres:alpine
-    hostname: ${POSTGRES_HOST}
-    environment:
-      - TZ=${WORKSPACE_TIMEZONE}
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    volumes:
-      - ./lds/postgres/data:/var/lib/postgresql/data
-      - ./lds/postgres/dump:/dump
-    depends_on:
-      - pgadmin
-    ports:
-      - "${POSTGRES_PORT}:5432"
-    networks:
-        - network
+    extends:
+      file: ./server/db/docker-compose.yml
+      service: postgres
 
   pgadmin:
-    image: dpage/pgadmin4
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=${POSTGRES_USER}@${POSTGRES_HOST}.sql
-      - PGADMIN_DEFAULT_PASSWORD=${POSTGRES_PASSWORD}
-    ports:
-      - ${PGADMIN_PORT}:80
-    networks:
-      - network
+    extends:
+      file: ./server/db/docker-compose.yml
+      service: pgadmin
 
-  redis:
-    image: redis:latest
-    environment:
-      - TZ=${WORKSPACE_TIMEZONE}
-    volumes:
-      - ./lds/redis/data:/var/lib/redis
-      - ./lds/redis/conf:/usr/local/etc/redis/redis.conf
-    depends_on:
-      - redis-commander
-    ports:
-      - "${REDIS_PORT}:6379"
-    networks:
-      - network
-
-  redis-commander:
-    image: rediscommander/redis-commander:latest
-    hostname: redis-commander
-    restart: always
-    environment:
-      - REDIS_HOSTS=local:${REDIS_HOST}:${REDIS_PORT}
-    ports:
-      - ${REDIS_COMMANDER_PORT}:8081
-    networks:
-      - network
-
-  mongo:
-    image: mongo:4.2
-    environment:
-      - TZ=${WORKSPACE_TIMEZONE}
-    volumes:
-      - ./lds/mongo/db:/data/db
-      - ./lds/mongo/configdb:/data/configdb
-      - ./lds/mongo/dump:/dump
-    ports:
-      - "${MONGO_PORT}:27017"
-    networks:
-      - network
+#  redis:
+#    extends:
+#      file: ./server/db/docker-compose.yml
+#      service: redis
+#
+#  redis-commander:
+#    extends:
+#      file: ./server/db/docker-compose.yml
+#      service: redis-commander
+#
+#  mongo:
+#    extends:
+#      file: ./server/db/docker-compose.yml
+#      service: mongo
+#
+#  git:
+#    extends:
+#      file: ./server/git/docker-compose.yml
+#      service: git
+#
+#  mail:
+#    extends:
+#      file: ./server/mail/docker-compose.yml
+#      service: mail
 
 networks:
   network:
+    name: prod_network
     driver: bridge
+
+#networks:
+#  network:
+#    driver: bridge

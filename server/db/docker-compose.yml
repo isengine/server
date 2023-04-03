@@ -1,0 +1,122 @@
+version: "3"
+
+services:
+
+  adminer:
+    image: adminer
+    restart: always
+    environment:
+      - ADMINER_DEFAULT_SERVER=${MYSQL_HOST}
+    volumes:
+      - ./adminer:/etc/php/7.4/cli/conf.d
+    ports:
+      - 8800:8080
+    networks:
+      - network
+
+  mysql:
+    image: mysql:8.0.29
+    hostname: ${MYSQL_HOST}
+    restart: unless-stopped
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      - TZ=${WORKSPACE_TIMEZONE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/conf.d:/etc/mysql/conf.d
+      - ./mysql/logs:/var/log/mysql
+      - ./mysql/dump:/dump
+    command: --default-authentication-plugin=mysql_native_password --skip_name_resolve
+    depends_on:
+      - phpmyadmin
+    ports:
+      - 3306:3306
+    networks:
+      - network
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: unless-stopped
+    environment:
+      - TZ=${WORKSPACE_TIMEZONE}
+      - PMA_ARBITRARY=1
+      - MYSQL_HOST=${MYSQL_HOST}
+    volumes:
+      - ./phpmyadmin:/usr/local/etc/php/conf.d
+    ports:
+      - 8810:80
+    networks:
+      - network
+
+  postgres:
+    image: postgres:alpine
+    hostname: ${POSTGRES_HOST}
+    environment:
+      - TZ=${WORKSPACE_TIMEZONE}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+      - ./postgres/dump:/dump
+    depends_on:
+      - pgadmin
+    ports:
+      - 5432:5432
+    networks:
+      - network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${POSTGRES_USER}@${POSTGRES_HOST}.sql
+      - PGADMIN_DEFAULT_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - 8820:80
+    networks:
+      - network
+
+  #redis:
+  #  image: redis:latest
+  #  environment:
+  #    - TZ=${WORKSPACE_TIMEZONE}
+  #  volumes:
+  #    - ./redis/data:/var/lib/redis
+  #    - ./redis/conf:/usr/local/etc/redis/redis.conf
+  #  depends_on:
+  #    - redis-commander
+  #  ports:
+  #    - 6379:6379
+  #  networks:
+  #    - network
+
+  #redis-commander:
+  #  image: rediscommander/redis-commander:latest
+  #  hostname: redis-commander
+  #  restart: always
+  #  environment:
+  #    - REDIS_HOSTS=local:redis:6379
+  #  ports:
+  #    - 8830:8081
+  #  networks:
+  #    - network
+
+  #mongo:
+  #  image: mongo:4.2
+  #  environment:
+  #    - TZ=${WORKSPACE_TIMEZONE}
+  #  volumes:
+  #    - ./mongo/db:/data/db
+  #    - ./mongo/configdb:/data/configdb
+  #    - ./mongo/dump:/dump
+  #  ports:
+  #    - 27017:27017
+  #  networks:
+  #    - network
+
+networks:
+  network:
+    name: prod_network
+    external: true

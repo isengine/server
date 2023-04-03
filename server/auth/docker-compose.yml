@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+
+  auth:
+    build: .
+    restart: unless-stopped
+    volumes:
+      - ../../project/auth:/var/www
+    working_dir: /var/www
+    command: >
+      bash -c "yarn
+      && yarn prisma generate
+      && yarn start"
+    ports:
+      - 5001:5001
+    networks:
+      - network
+
+networks:
+  network:
+    name: prod_network
+    external: true
