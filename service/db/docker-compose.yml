@@ -10,9 +10,9 @@ services:
     environment:
       - ADMINER_DEFAULT_SERVER=${MYSQL_HOST}
     volumes:
-      - ./adminer:/etc/php/7.4/cli/conf.d
+      - ../../data/db/adminer:/etc/php/7.4/cli/conf.d
     ports:
-      - 8800:8080
+      - ${ADMINER_PORT}:8080
     networks:
       - network
 
@@ -28,15 +28,15 @@ services:
       - TZ=${WORKSPACE_TIMEZONE}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
-      - ./mysql/data:/var/lib/mysql
-      - ./mysql/conf.d:/etc/mysql/conf.d
-      - ./mysql/logs:/var/log/mysql
-      - ./mysql/dump:/dump
+      - ../../data/db/mysql/conf.d:/etc/mysql/conf.d
+      - ../../data/db/mysql/data:/var/lib/mysql
+      - ../../data/db/mysql/logs:/var/log/mysql
+      - ../../data/db/mysql/dump:/dump
     command: --default-authentication-plugin=mysql_native_password --skip_name_resolve
     depends_on:
       - phpmyadmin
     ports:
-      - 3306:3306
+      - ${MYSQL_PORT}:3306
     networks:
       - network
 
@@ -50,9 +50,9 @@ services:
       - PMA_ARBITRARY=1
       - MYSQL_HOST=${MYSQL_HOST}
     volumes:
-      - ./phpmyadmin:/usr/local/etc/php/conf.d
+      - ../../data/db/phpmyadmin:/usr/local/etc/php/conf.d
     ports:
-      - 8810:80
+      - ${PHPMYADMIN_PORT}:80
     networks:
       - network
 
@@ -67,12 +67,12 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
-      - ./postgres/data:/var/lib/postgresql/data
-      - ./postgres/dump:/dump
+      - ../../data/db/postgres/data:/var/lib/postgresql/data
+      - ../../data/db/postgres/dump:/dump
     depends_on:
       - pgadmin
     ports:
-      - 5432:5432
+      - ${POSTGRES_PORT}:5432
     networks:
       - network
 
@@ -84,7 +84,7 @@ services:
       - PGADMIN_DEFAULT_EMAIL=${POSTGRES_USER}@${POSTGRES_HOST}.sql
       - PGADMIN_DEFAULT_PASSWORD=${POSTGRES_PASSWORD}
     ports:
-      - 8820:80
+      - ${PGADMIN_PORT}:80
     networks:
       - network
 
@@ -95,25 +95,25 @@ services:
   #  environment:
   #    - TZ=${WORKSPACE_TIMEZONE}
   #  volumes:
-  #    - ./redis/data:/var/lib/redis
-  #    - ./redis/conf:/usr/local/etc/redis/redis.conf
+  #    - ../../data/db/redis/conf:/usr/local/etc/redis/redis.conf
+  #    - ../../data/db/redis/data:/var/lib/redis
   #  depends_on:
   #    - redis-commander
   #  ports:
-  #    - 6379:6379
+  #    - ${REDIS_PORT}:6379
   #  networks:
   #    - network
 
   #redis-commander:
   #  image: rediscommander/redis-commander:latest
-  #  hostname: redis-commander
+  #  hostname: ${REDIS_COMMANDER_HOST}
   #  restart: always
   #  env_file:
   #    - ../../.env
   #  environment:
   #    - REDIS_HOSTS=local:redis:6379
   #  ports:
-  #    - 8830:8081
+  #    - ${REDIS_COMMANDER_PORT}:8081
   #  networks:
   #    - network
 
@@ -124,11 +124,11 @@ services:
   #  environment:
   #    - TZ=${WORKSPACE_TIMEZONE}
   #  volumes:
-  #    - ./mongo/db:/data/db
-  #    - ./mongo/configdb:/data/configdb
-  #    - ./mongo/dump:/dump
+  #    - ../../data/db/mongo/configdb:/data/configdb
+  #    - ../../data/db/mongo/db:/data/db
+  #    - ../../data/db/mongo/dump:/dump
   #  ports:
-  #    - 27017:27017
+  #    - ${MONGO_PORT}:27017
   #  networks:
   #    - network
 

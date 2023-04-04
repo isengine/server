@@ -22,10 +22,10 @@ services:
       file: ./server/nginx/docker-compose.yml
       service: nginx
 
-  python:
-    extends:
-      file: ./server/python/docker-compose.yml
-      service: python
+#  python:
+#    extends:
+#      file: ./server/python/docker-compose.yml
+#      service: python
 
   php:
     extends:
@@ -86,7 +86,3 @@ networks:
   network:
     name: prod_network
     driver: bridge
-
-#networks:
-#  network:
-#    driver: bridge
