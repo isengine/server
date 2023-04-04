@@ -6,6 +6,8 @@ services:
     image: analogic/poste.io
     hostname: mail.example.com
     restart: unless-stopped
+    env_file:
+      - ../../.env
     environment:
       - TZ=${WORKSPACE_TIMEZONE}
       - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}

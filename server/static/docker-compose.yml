@@ -5,6 +5,8 @@ services:
   static:
     build: .
     restart: unless-stopped
+    env_file:
+      - ../../.env
     volumes:
       - ../../project/static:/var/www
     working_dir: /var/www

@@ -5,6 +5,8 @@ services:
   php:
     build: .
     restart: unless-stopped
+    env_file:
+      - ../../.env
     volumes:
       - ../../project/:/var/www
       - ../.ssh:/.ssh

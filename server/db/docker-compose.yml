@@ -5,6 +5,8 @@ services:
   adminer:
     image: adminer
     restart: always
+    env_file:
+      - ../../.env
     environment:
       - ADMINER_DEFAULT_SERVER=${MYSQL_HOST}
     volumes:
@@ -20,6 +22,8 @@ services:
     restart: unless-stopped
     security_opt:
       - seccomp:unconfined
+    env_file:
+      - ../../.env
     environment:
       - TZ=${WORKSPACE_TIMEZONE}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
@@ -39,6 +43,8 @@ services:
   phpmyadmin:
     image: phpmyadmin:latest
     restart: unless-stopped
+    env_file:
+      - ../../.env
     environment:
       - TZ=${WORKSPACE_TIMEZONE}
       - PMA_ARBITRARY=1
@@ -53,6 +59,8 @@ services:
   postgres:
     image: postgres:alpine
     hostname: ${POSTGRES_HOST}
+    env_file:
+      - ../../.env
     environment:
       - TZ=${WORKSPACE_TIMEZONE}
       - POSTGRES_DB=${POSTGRES_DB}
@@ -70,6 +78,8 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
+    env_file:
+      - ../../.env
     environment:
       - PGADMIN_DEFAULT_EMAIL=${POSTGRES_USER}@${POSTGRES_HOST}.sql
       - PGADMIN_DEFAULT_PASSWORD=${POSTGRES_PASSWORD}
@@ -80,6 +90,8 @@ services:
 
   #redis:
   #  image: redis:latest
+  #  env_file:
+  #    - ../../.env
   #  environment:
   #    - TZ=${WORKSPACE_TIMEZONE}
   #  volumes:
@@ -96,6 +108,8 @@ services:
   #  image: rediscommander/redis-commander:latest
   #  hostname: redis-commander
   #  restart: always
+  #  env_file:
+  #    - ../../.env
   #  environment:
   #    - REDIS_HOSTS=local:redis:6379
   #  ports:
@@ -105,6 +119,8 @@ services:
 
   #mongo:
   #  image: mongo:4.2
+  #  env_file:
+  #    - ../../.env
   #  environment:
   #    - TZ=${WORKSPACE_TIMEZONE}
   #  volumes:

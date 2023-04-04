@@ -5,6 +5,8 @@ services:
   api:
     build: .
     restart: unless-stopped
+    env_file:
+      - ../../.env
     volumes:
       - ../../project/api:/var/www
     working_dir: /var/www
