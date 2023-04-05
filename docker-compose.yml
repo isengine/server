@@ -4,82 +4,82 @@ services:
 
   api:
     extends:
-      file: ./server/api/docker-compose.yml
+      file: ./service/api/docker-compose.yml
       service: api
 
   auth:
     extends:
-      file: ./server/auth/docker-compose.yml
+      file: ./service/auth/docker-compose.yml
       service: auth
 
   static:
     extends:
-      file: ./server/static/docker-compose.yml
+      file: ./service/static/docker-compose.yml
       service: static
 
   nginx:
     extends:
-      file: ./server/nginx/docker-compose.yml
+      file: ./service/nginx/docker-compose.yml
       service: nginx
 
 #  python:
 #    extends:
-#      file: ./server/python/docker-compose.yml
+#      file: ./service/python/docker-compose.yml
 #      service: python
 
   php:
     extends:
-      file: ./server/php/docker-compose.yml
+      file: ./service/php/docker-compose.yml
       service: php
 
   adminer:
     extends:
-      file: ./server/db/docker-compose.yml
+      file: ./service/db/docker-compose.yml
       service: adminer
 
   mysql:
     extends:
-      file: ./server/db/docker-compose.yml
+      file: ./service/db/docker-compose.yml
       service: mysql
 
   phpmyadmin:
     extends:
-      file: ./server/db/docker-compose.yml
+      file: ./service/db/docker-compose.yml
       service: phpmyadmin
 
   postgres:
     extends:
-      file: ./server/db/docker-compose.yml
+      file: ./service/db/docker-compose.yml
       service: postgres
 
   pgadmin:
     extends:
-      file: ./server/db/docker-compose.yml
+      file: ./service/db/docker-compose.yml
       service: pgadmin
 
 #  redis:
 #    extends:
-#      file: ./server/db/docker-compose.yml
+#      file: ./service/db/docker-compose.yml
 #      service: redis
 #
 #  redis-commander:
 #    extends:
-#      file: ./server/db/docker-compose.yml
+#      file: ./service/db/docker-compose.yml
 #      service: redis-commander
 #
 #  mongo:
 #    extends:
-#      file: ./server/db/docker-compose.yml
+#      file: ./service/db/docker-compose.yml
 #      service: mongo
 #
 #  git:
 #    extends:
-#      file: ./server/git/docker-compose.yml
+#      file: ./service/git/docker-compose.yml
 #      service: git
 #
 #  mail:
 #    extends:
-#      file: ./server/mail/docker-compose.yml
+#      file: ./service/mail/docker-compose.yml
 #      service: mail
 
 networks:
