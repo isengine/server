@@ -11,7 +11,7 @@ services:
       - ../../data/.ssh:/.ssh
       - ../../data/php/conf.d:/usr/local/etc/php/conf.d
       - ../../data/php/supervisor.d:/etc/supervisor.d
-      - ../../project/:/var/www
+      - ../../projects/:/var/www
     working_dir: /var/www/
     ports:
       - 9000:9000

@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+
+  mysql:
+    image: mysql:8.0.29
+    hostname: ${MYSQL_HOST}
+    restart: unless-stopped
+    security_opt:
+      - seccomp:unconfined
+    env_file:
+      - ../../.env
+    environment:
+      - TZ=${WORKSPACE_TIMEZONE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ../../data/mysql/conf.d:/etc/mysql/conf.d
+      - ../../data/mysql/data:/var/lib/mysql
+      - ../../data/mysql/logs:/var/log/mysql
+      - ../../data/mysql/dump:/dump
+    command: --default-authentication-plugin=mysql_native_password --skip_name_resolve
+    ports:
+      - ${MYSQL_PORT}:3306
+    networks:
+      - network
+
+networks:
+  network:
+    name: prod_network
+    external: true

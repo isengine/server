@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+
+  adminer:
+    image: adminer
+    restart: always
+    env_file:
+      - ../../.env
+    environment:
+      - ADMINER_DEFAULT_SERVER=${MYSQL_HOST}
+    volumes:
+      - ../../data/adminer:/etc/php/7.4/cli/conf.d
+    ports:
+      - ${ADMINER_PORT}:8080
+    networks:
+      - network
+
+networks:
+  network:
+    name: prod_network
+    external: true

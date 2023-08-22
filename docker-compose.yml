@@ -2,85 +2,62 @@ version: "3"
 
 services:
 
-  api:
-    extends:
-      file: ./service/api/docker-compose.yml
-      service: api
-
-  auth:
-    extends:
-      file: ./service/auth/docker-compose.yml
-      service: auth
-
-  static:
-    extends:
-      file: ./service/static/docker-compose.yml
-      service: static
-
-  nginx:
-    extends:
-      file: ./service/nginx/docker-compose.yml
-      service: nginx
-
-#  python:
-#    extends:
-#      file: ./service/python/docker-compose.yml
-#      service: python
-
-  php:
-    extends:
-      file: ./service/php/docker-compose.yml
-      service: php
-
   adminer:
     extends:
-      file: ./service/db/docker-compose.yml
+      file: ./services/adminer/docker-compose.yml
       service: adminer
-
-  mysql:
-    extends:
-      file: ./service/db/docker-compose.yml
-      service: mysql
-
-  phpmyadmin:
-    extends:
-      file: ./service/db/docker-compose.yml
-      service: phpmyadmin
-
-  postgres:
-    extends:
-      file: ./service/db/docker-compose.yml
-      service: postgres
-
-  pgadmin:
-    extends:
-      file: ./service/db/docker-compose.yml
-      service: pgadmin
-
-#  redis:
+#  api:
 #    extends:
-#      file: ./service/db/docker-compose.yml
-#      service: redis
-#
-#  redis-commander:
-#    extends:
-#      file: ./service/db/docker-compose.yml
-#      service: redis-commander
-#
-#  mongo:
-#    extends:
-#      file: ./service/db/docker-compose.yml
-#      service: mongo
-#
+#      file: ./services/api/docker-compose.yml
+#      service: api
 #  git:
 #    extends:
-#      file: ./service/git/docker-compose.yml
+#      file: ./services/git/docker-compose.yml
 #      service: git
-#
-#  mail:
+#  mongo:
 #    extends:
-#      file: ./service/mail/docker-compose.yml
-#      service: mail
+#      file: ./services/mongo/docker-compose.yml
+#      service: mongo
+  mysql:
+    extends:
+      file: ./services/mysql/docker-compose.yml
+      service: mysql
+  nginx:
+    extends:
+      file: ./services/nginx/docker-compose.yml
+      service: nginx
+#  pgadmin:
+#    extends:
+#      file: ./services/pgadmin/docker-compose.yml
+#      service: pgadmin
+  php:
+    extends:
+      file: ./services/php/docker-compose.yml
+      service: php
+  phpmyadmin:
+    extends:
+      file: ./services/phpmyadmin/docker-compose.yml
+      service: phpmyadmin
+#  poste:
+#    extends:
+#      file: ./services/poste/docker-compose.yml
+#      service: poste
+#  postgres:
+#    extends:
+#      file: ./services/postgres/docker-compose.yml
+#      service: postgres
+#  python:
+#    extends:
+#      file: ./services/python/docker-compose.yml
+#      service: python
+#  redis:
+#    extends:
+#      file: ./services/redis/docker-compose.yml
+#      service: redis
+#  redis-commander:
+#    extends:
+#      file: ./services/redis-commander/docker-compose.yml
+#      service: redis-commander
 
 networks:
   network:

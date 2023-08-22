@@ -2,17 +2,18 @@ version: "3"
 
 services:
 
-  static:
+  api:
     build: .
     restart: unless-stopped
     env_file:
       - ../../.env
     volumes:
-      - ../../project/static:/var/www
+      - ../../projects/api:/var/www
     working_dir: /var/www
-    command: bash -c "yarn && yarn start"
+    command: >
+      bash -c "yarn && yarn start"
     ports:
-      - 8080:8080
+      - 5000:5000
     networks:
       - network
 
