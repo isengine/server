@@ -6,10 +6,6 @@ services:
     extends:
       file: ./services/adminer/docker-compose.yml
       service: adminer
-#  api:
-#    extends:
-#      file: ./services/api/docker-compose.yml
-#      service: api
 #  git:
 #    extends:
 #      file: ./services/git/docker-compose.yml
@@ -26,6 +22,10 @@ services:
     extends:
       file: ./services/nginx/docker-compose.yml
       service: nginx
+#  nodejs:
+#    extends:
+#      file: ./services/nodejs/docker-compose.yml
+#      service: nodejs
 #  pgadmin:
 #    extends:
 #      file: ./services/pgadmin/docker-compose.yml
