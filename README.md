@@ -443,12 +443,17 @@ docker system prune --volumes --all
 
 https://git-scm.com/download/win
 
-Под Linux нужно установить пакет **git** соответствующей командой. Например:
+Под Linux нужно установить пакет **git** соответствующей командой.
+
+Ubuntu:
 
 ```shell script
-# ubuntu
 apt-get install git
-# alpine
+```
+
+Alpine:
+
+```shell script
 apk add git
 ```
 
@@ -458,15 +463,24 @@ apk add git
 
 Полное руководство: https://git-scm.com/book/en/v2
 
-Клонировать репозиторий:
+### Клонировать репозиторий
+
+Обычное копирование:
 
 ```shell script
-# обычное копирование
-git clone https://repository-url.git
-# в текущий каталог
-git clone https://repository-url.git .
-# с указанием ветки
-git clone --branch BRANCH_NAME https://repository-url.git .
+git clone https://REPOSITORY_URL.git
+```
+
+В текущий каталог:
+
+```shell script
+git clone https://REPOSITORY_URL.git .
+```
+
+С указанием ветки:
+
+```shell script
+git clone --branch BRANCH_NAME https://REPOSITORY_URL.git .
 ```
 
 Выбрать ветку репозитория для дальнейшей работы:
@@ -474,6 +488,8 @@ git clone --branch BRANCH_NAME https://repository-url.git .
 ```shell script
 git branch BRANCH_NAME
 ```
+
+### Статус и логи
 
 Узнать статус:
 
@@ -495,31 +511,75 @@ git log
 git remote show origin
 ```
 
-Получить последние изменения:
+### Работа с репозиторием
+
+Получить и сразу принять последние изменения:
 
 ```shell script
-git fetch origin BRANCH_NAME
-git pull origin BRANCH_NAME
+git pull
+```
+
+Получить изменения из ветки, не применяя их в проект:
+
+```shell script
+git fetch
+```
+
+Применить изменения из ветки в проект:
+
+```shell script
+git merge
+```
+
+Добавить свои изменения в файлах или каталогах:
+
+```shell script
+git add PATH/TO/FOLER/OR/FILE.EXT
+```
+
+Зафиксировать изменения:
+
+```shell script
+git commit -m "DESCRIPTION"
 ```
 
 Залить свои изменения в репозиторий:
 
 ```shell script
-# добавить каталог или файл
-git add PATH/TO/FOLER/OR/FILE.EXT
-...
-git commit -m "DESCRIPTION"
-git push origin BRANCH_NAME
+git push
 ```
 
-Отменить изменения:
+Если вы хотите указать ветку репозитория для работы, это можно сделать, добавив указатель в конце каждой комманды, например:
 
 ```shell script
-# убрать каталог или файл из коммита
+git pull origin BRANCH_NAME
+```
+
+Если вы выбрали ветку в самом начале, достаточно использовать обычные комманды.
+
+### Отмена действий
+
+Отменить изменения в файле или каталоге:
+
+```shell script
+git checkout PATH/TO/FOLER/OR/FILE.EXT
+```
+
+Убрать каталог или файл из коммита:
+
+```shell script
 git restore --staged PATH/TO/FOLER/OR/FILE.EXT
-# вернуть файл из репозитория
+```
+
+Вернуть файл из репозитория:
+
+```shell script
 git restore PATH/TO/FILE.EXT
-# отменить коммит
+```
+
+Отменить коммит:
+
+```shell script
 git revert COMMIT_ID
 ```
 
