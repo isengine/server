@@ -88,11 +88,28 @@ git clone https://github.com/isengine/server
 
 **3**. Удалите все файлы **.gitkeep** во всех вложенных каталогах среды разработки.
 
+Windows power shell:
+
 ```shell script
-# windows power shell
 remove-item server/* -include .gitkeep -recurse
-# linux
+```
+
+Если вы находитесь внутри папки с клонированным репозиторием, выполните комманду:
+
+```shell script
+remove-item ./* -include .gitkeep -recurse
+```
+
+Linux / Mac
+
+```shell script
 find server/ -name ".gitkeep" | xargs rm
+```
+
+Если вы находитесь внутри папки с клонированным репозиторием, выполните комманду:
+
+```shell script
+find ./ -name ".gitkeep" | xargs rm
 ```
 
 **4**. Несколько проектов
@@ -105,7 +122,11 @@ find server/ -name ".gitkeep" | xargs rm
 
 ```shell script
 docker-compose up --build
-# с флагом -d консоль не заблокируется, но и вывод информации будет ограничен
+```
+
+С флагом -d консоль не заблокируется, но и вывод информации будет ограничен:
+
+```shell script
 docker-compose up --build -d
 ```
 
