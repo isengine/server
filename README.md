@@ -1294,7 +1294,7 @@ DROP USER '_MYSQL_USER_'@'%';
 
 ### Дамп MySQL
 
-**Вариант 1** 
+**Вариант 1**
 
 Если требуется создать дополнительных пользователей, то следует это сделать перед началом процедуры загрузки дампа.  
 
@@ -1324,11 +1324,27 @@ MySQL выдаст справедливое предупреждение:
 
 **Вариант 2**
 
-Воспользоваться утилитой Percona **XtraBackup**. 
+Из командной строки:
 
-Percona **XtraBackup** — это утилита для горячего резервного копирования баз данных MySQL.
+```
+mysqldump -u MYSQL_USER -pMYSQL_PASSWORD MYSQL_DB -P MYSQL_PORT > dumpfile.sql
+```
 
-О том, как работать с **XtraBackup** можно узнать по ссылке: https://habr.com/ru/post/520458/. 
+По ssh:
+
+```
+ssh LOGIN@SERVER_ADDRESS -p PORT 'mysqldump -u MYSQL_USER -pMYSQL_PASSWORD MYSQL_DB -P MYSQL_PORT > dumpfile.sql'
+scp -P PORT LOGIN@SERVER_ADDRESS:dumpfile.sql dumpfile.sql
+ssh LOGIN@SERVER_ADDRESS -p PORT 'rm dumpfile.sql'
+```
+
+LOGIN
+SERVER_ADDRESS
+PORT
+MYSQL_USER
+MYSQL_PASSWORD
+MYSQL_DB
+MYSQL_PORT
 
 [^ к оглавлению](#оглавление)
 
@@ -1391,6 +1407,8 @@ POSTGRES_USER@POSTGRES_HOST.sql
 
 ### Дамп PostgreSQL
 
+**Вариант 1**
+
 Выполните следующую команду на локальной машине:
 
 ```shell script
@@ -1406,6 +1424,31 @@ psql --username user_name database_name < /path/to/dump/pgsql-backup.sql
 **user_name** — имя пользователя. Значение *POSTGRES_USER*.
 
 **database_name** — название базы данных. Значение *POSTGRES_DB*.
+
+**Вариант 2**
+
+Из командной строки:
+
+```
+pg_dump -h PG_HOST -p PG_PORT -U PG_USER -F c -f dumpfile PG_DB
+```
+
+По ssh:
+
+```
+ssh LOGIN@SERVER_ADDRESS -p PORT 'pg_dump -h PG_HOST -p PG_PORT -U PG_USER -F c -f dumpfile PG_DB'
+scp -P PORT LOGIN@SERVER_ADDRESS:dumpfile.sql dumpfile.sql
+ssh LOGIN@SERVER_ADDRESS -p PORT 'rm dumpfile.sql'
+```
+
+LOGIN
+SERVER_ADDRESS
+PORT
+PG_HOST
+PG_USER
+PG_PASSWORD
+PG_DB
+PG_PORT
 
 [^ к оглавлению](#оглавление)
 
