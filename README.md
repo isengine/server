@@ -89,6 +89,12 @@
 git clone https://github.com/isengine/server
 ```
 
+или в текущий каталог вашего проекта
+
+```shell script
+git clone https://github.com/isengine/server .
+```
+
 **2**. Удалите все файлы **.gitkeep** во всех вложенных каталогах среды разработки.
 
 Windows power shell:
