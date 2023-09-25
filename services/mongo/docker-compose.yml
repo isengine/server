@@ -9,9 +9,9 @@ services:
     environment:
       - TZ=${WORKSPACE_TIMEZONE}
     volumes:
-      - ../../data/mongo/configdb:/data/configdb
-      - ../../data/mongo/db:/data/db
-      - ../../data/mongo/dump:/dump
+      - ./data/configdb:/data/configdb
+      - ./data/db:/data/db
+      - ./data/dump:/dump
     ports:
       - ${MONGO_PORT}:27017
     networks:

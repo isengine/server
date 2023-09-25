@@ -13,8 +13,8 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
-      - ../../data/postgres/data:/var/lib/postgresql/data
-      - ../../data/postgres/dump:/dump
+      - ./data/lib:/var/lib/postgresql/data
+      - ./data/dump:/dump
     ports:
       - ${POSTGRES_PORT}:5432
     networks:

@@ -9,8 +9,8 @@ services:
     environment:
       - TZ=${WORKSPACE_TIMEZONE}
     volumes:
-      - ../../data/redis/conf:/usr/local/etc/redis/redis.conf
-      - ../../data/redis/data:/var/lib/redis
+      - ./data/conf:/usr/local/etc/redis/redis.conf
+      - ./data/lib:/var/lib/redis
     ports:
       - ${REDIS_PORT}:6379
     networks:

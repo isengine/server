@@ -10,7 +10,7 @@ services:
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=1
     volumes:
-      - ../../projects/:/var/www
+      - ../../projects:/var/www
     working_dir: /var/www/
     ports:
       - 8000:8000

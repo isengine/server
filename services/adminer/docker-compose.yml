@@ -10,7 +10,7 @@ services:
     environment:
       - ADMINER_DEFAULT_SERVER=${MYSQL_HOST}
     volumes:
-      - ../../data/adminer:/etc/php/7.4/cli/conf.d
+      - ./data:/etc/php/7.4/cli/conf.d
     ports:
       - ${ADMINER_PORT}:8080
     networks:

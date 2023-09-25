@@ -26,10 +26,10 @@ services:
 #    extends:
 #      file: ./services/nodejs/docker-compose.yml
 #      service: nodejs
-#  pgadmin:
-#    extends:
-#      file: ./services/pgadmin/docker-compose.yml
-#      service: pgadmin
+  pgadmin:
+    extends:
+      file: ./services/pgadmin/docker-compose.yml
+      service: pgadmin
   php:
     extends:
       file: ./services/php/docker-compose.yml
@@ -42,10 +42,10 @@ services:
 #    extends:
 #      file: ./services/poste/docker-compose.yml
 #      service: poste
-#  postgres:
-#    extends:
-#      file: ./services/postgres/docker-compose.yml
-#      service: postgres
+  postgres:
+    extends:
+      file: ./services/postgres/docker-compose.yml
+      service: postgres
 #  python:
 #    extends:
 #      file: ./services/python/docker-compose.yml
