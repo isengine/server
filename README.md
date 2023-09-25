@@ -1070,6 +1070,12 @@ php -m
 Далее в консоли вам нужно перейти в папку проекта и выполнить
 
 ```
+composer install --ignore-platform-reqs
+```
+
+или
+
+```
 composer update
 ```
 
