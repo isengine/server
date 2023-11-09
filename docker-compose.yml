@@ -6,6 +6,10 @@ services:
     extends:
       file: ./services/adminer/docker-compose.yml
       service: adminer
+# dbeaver:
+#   extends:
+#     file: ./services/dbeaver/docker-compose.yml
+#     service: dbeaver
 #  git:
 #    extends:
 #      file: ./services/git/docker-compose.yml

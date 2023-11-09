@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+
+  dbeaver:
+    image: dbeaver/cloudbeaver
+    restart: unless-stopped
+    volumes:
+      - ./data:/opt/cloudbeaver/workspace
+    ports:
+      - ${DBEAVER_PORT}:8978
+    networks:
+      - network
+
+networks:
+  network:
+    name: prod_network
+    external: true

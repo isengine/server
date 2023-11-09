@@ -45,6 +45,7 @@
   - [Adminer](#adminer)
     - [Настройка Adminer](#настройка-adminer)
     - [Настройка пользователей в Adminer](#настройка-пользователей-в-adminer)
+  - [DBeaver](#dbeaver)
   - [phpMyAdmin](#phpmyadmin)
     - [Настройка phpMyAdmin](#настройка-phpmyadmin)
   - [MySQL](#mysql)
@@ -177,6 +178,7 @@ Adminer работает на 8800 порту: http://localhost:8800
   - composer
 - базы данных
   - adminer
+  - dbeaver
   - phpmyadmin
     - mysql
   - postgres
@@ -199,6 +201,7 @@ Adminer работает на 8800 порту: http://localhost:8800
 ├── services
 │   ├── .ssh
 │   ├── adminer
+│   ├── dbeaver
 │   ├── git
 │   ├── mailcow
 │   ├── mongo
@@ -1143,6 +1146,27 @@ CREATE ROLE user_name WITH LOGIN PASSWORD 'password';
 ```
 GRANT ALL PRIVILEGES ON DATABASE database_name TO user_name;
 ```
+
+[^ к оглавлению](#оглавление)
+
+## DBeaver
+
+DBeaver - это инструмент для управления базами данных. Позволяет работать с огромным количеством БД, как SQL, так и no-SQL.
+
+Работает через драйвер JDBC и ODBS. Таким образом поддерживаются популярные базы MySQL, PostgreSQL, SQLite, а также ClickHouse, Firebase, Elasticsearch. Enterprise версия поддерживает MongoDB и Redis.
+
+Возможности DBeaver включают в себя:
+
+- выполнение SQL-запросов, SQL-скриптов, генерацию DDL,
+- браузер/редактор данных,
+- просмотр и редактирование структуры (метаданных),
+- диаграммы отношений (ERD),
+- SSH-туннелирование,
+- экспорт/миграцию данных,
+- импорт, экспорт и резервное копирование данных,
+- генерацию mock данных для тестирования.
+
+DBeaver запускается в отдельном контейнере на 8978 порту, но мы перебрасываем этот порт на любой, заданный в переменной окружения (по-умолчанию 8890).
 
 [^ к оглавлению](#оглавление)
 
