@@ -1,8 +1,14 @@
-FROM python:3.11-alpine
+FROM python:3-slim
 
-WORKDIR /var/www
+WORKDIR /usr/src/app
 
-RUN apk update && apk add bash
-RUN apk add --update --no-cache --virtual .tmp-build-deps \
-  gcc libc-dev linux-headers postgresql-dev && \
-  pip install --no-cache-dir -r requirements.txt
+RUN apt-get update && \
+apt-get install bash && \
+apt-get install -y gcc && \
+rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir --upgrade pip
+RUN pip install gunicorn
+
+COPY ./data/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt

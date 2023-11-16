@@ -2,21 +2,17 @@ version: "3"
 
 services:
 
-  python:
+  cpp:
     build: .
     environment:
-      - PORT=${PYTHON_PORT}
+      - PORT=${CPP_PORT}
       - TZ=${WORKSPACE_TIMEZONE}
-      - PYTHONDONTWRITEBYTECODE=1
-      - PYTHONUNBUFFERED=1
     volumes:
       - ./data:/app/src
-    working_dir: /app
-    # command: gunicorn -w 4 script:app
-    # command: python3 main.py
+    working_dir: /app/src
     stdin_open: true
     ports:
-      - ${PYTHON_PORT}:${PYTHON_PORT}
+      - ${CPP_PORT}:${CPP_PORT}
     networks:
       - network
 

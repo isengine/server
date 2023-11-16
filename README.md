@@ -40,8 +40,10 @@
     - [Структура PHP](#структура-php)
     - [Настройка Nginx и PHP](#настройка-nginx-и-php)
     - [Composer в проекте PHP](#composer-в-проекте-php)
+  - [С++](#c++)
   - [Python](#python)
     - [Настройка python](#настройка-python)
+  - [Тренажер](#тренажер)
   - [Adminer](#adminer)
     - [Настройка Adminer](#настройка-adminer)
     - [Настройка пользователей в Adminer](#настройка-пользователей-в-adminer)
@@ -197,6 +199,10 @@ Adminer работает на 8800 порту: http://localhost:8800
 - почтовый сервер
   - poste
   - mailcow
+- прочие песочницы и компиляторы
+  - c++
+  - python
+  - тренажер
 
 [^ к оглавлению](#оглавление)
 
@@ -209,6 +215,7 @@ Adminer работает на 8800 порту: http://localhost:8800
 ├── services
 │   ├── .ssh
 │   ├── adminer
+│   ├── cpp
 │   ├── dbeaver
 │   ├── git
 │   ├── mailcow
@@ -223,7 +230,8 @@ Adminer работает на 8800 порту: http://localhost:8800
 │   ├── postgres
 │   ├── python
 │   ├── redis
-│   └── redis-commander
+│   ├── redis-commander
+│   └── trainer
 ├── .env
 └── docker-compose.yml
 ```
@@ -1069,11 +1077,27 @@ composer update
 
 [^ к оглавлению](#оглавление)
 
+## С++
+
+Мы предоставляем рабочее окружение языка **С++** последней доступной версии.
+
+Вы можете использовать его как песочницу **stand-alone** проектов, запуская проекты из папки **data** данного сервиса.
+
+[^ к оглавлению](#оглавление)
+
 ## Python
+
+Мы предоставляем рабочее окружение языка **Python** последней доступной версии.
+
+Вы можете использовать его как песочницу **stand-alone** проектов, запуская проекты из папки **data** данного сервиса.
+
+Также вы можете настроить окружения для работы с веб-приложениями.
+
+[^ к оглавлению](#оглавление)
 
 ### Настройка python
 
-В каталоге **services/python** лежит файл **gunicorn.py**. Он содержит базовые настройки для сервера **gunicorn**.
+В каталоге **data** этого сервиса лежит файл **gunicorn.py**. Он содержит базовые настройки для сервера **gunicorn**.
 
 Этот файл нужно скопировать в каталог вашего **python** проекта и внести некоторые изменения.
 
@@ -1116,8 +1140,94 @@ gunicorn -c gunicorn.py DOMAIN_NAME.wsgi
 Если вам нужно запустить скрипт, используйте такую команду
 
 ```shell script
-python ./script.py
+python3 ./script.py
 ```
+
+[^ к оглавлению](#оглавление)
+
+## Тренажер
+
+Этот сервис представляет собой компилятор кода на разных языках.
+
+Его особенность в том, что он может компилировать код, полученный из запроса по **http**-протоколу с методом **GET**.
+
+На данный момент он реализует доступ через всего один эндпоинт **/run/**.
+
+В качестве входящих данных вы можете передать json-строку.
+
+Пример кода на языке **Go**:
+
+    {
+        "command": "go run main.go",
+        "files": [
+            {
+                "name": "main.go",
+                "content": "package main\nimport \"fmt\"\nfunc main() {fmt.Println(\"Hello world!\")}"
+            }
+        ]
+    }
+
+Пример кода на языке **Python**:
+
+    {
+        "command": "python main.py",
+        "files": [
+            {
+                "name": "main.py",
+                "content": "n=5\nstring=\"Hello World \"\nprint(string * n)"
+            }
+        ]
+    }
+
+Пример кода на языке **Python** с входными данными:
+
+    {
+        "command": "python main.py",
+        "stdin": ["name", "city"],
+        "files": [
+            {
+                "name": "main.py",
+                "content": "name_user = input()\ncity_user = input()\nprint(f'Вас зовут {name_user}. Ваш город {city_user}')\n"
+            }
+        ]
+    }
+
+Пример кода на языке **С++**:
+
+    {
+        "command": "g++ -pipe -O2 -static -o main main.cpp && ./main",
+        "files": [
+            {
+                "name": "main.cpp",
+                "content": "#include <iostream>\n\nint main()\n{\n  std::cout << \"Hello world!\";\n  return 0;\n}\n"
+            }
+        ]
+    }
+
+Пример кода на языке **С++** с входными данными:
+
+    {
+        "command": "g++ -pipe -O2 -static -o main main.cpp && ./main",
+        "stdin": [2, 21],
+        "files": [
+            {
+                "name": "main.cpp",
+                "content": "#include <iostream>\n\nint main() {\n    int a, b;\n    std::cin >> a >> b;\n    std::cout << a + b << std::endl;\n}\n"
+            }
+        ]
+    }
+
+Пример ответа:
+
+    {
+        "exit_code": 0,
+        "stdin": 2,
+        "stdout": "...",
+        "stderr": "",
+        "oom_killed": false,
+        "timeout": false,
+        "duration": 0
+    }
 
 [^ к оглавлению](#оглавление)
 

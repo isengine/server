@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+
+  trainer:
+    build: .
+    # restart: unless-stopped
+    environment:
+      - PORT=${TRAINER_PORT}
+      - TIMEOUT=30
+    volumes:
+      - ./data:/app
+    command: python3 /app/launch.py
+    ports:
+      - ${TRAINER_PORT}:${TRAINER_PORT}
+    networks:
+      - network
+
+networks:
+  network:
+    name: prod_network
+    external: true

@@ -2,66 +2,91 @@ version: "3"
 
 services:
 
+  # веб-панель управления базами данных
   adminer:
     extends:
       file: ./services/adminer/docker-compose.yml
       service: adminer
-# dbeaver:
-#   extends:
-#     file: ./services/dbeaver/docker-compose.yml
-#     service: dbeaver
+#  # песочница для проектов на c++
+#  cpp:
+#    extends:
+#      file: ./services/cpp/docker-compose.yml
+#      service: cpp
+#  # облачное приложения управления базами данных
+#  dbeaver:
+#    extends:
+#      file: ./services/dbeaver/docker-compose.yml
+#      service: dbeaver
+#  # система контроля версий gitlab
 #  git:
 #    extends:
 #      file: ./services/git/docker-compose.yml
 #      service: git
+#  # база данных mongo db
 #  mongo:
 #    extends:
 #      file: ./services/mongo/docker-compose.yml
 #      service: mongo
+  # база данных mysql
   mysql:
     extends:
       file: ./services/mysql/docker-compose.yml
       service: mysql
+  # сервер nginx
   nginx:
     extends:
       file: ./services/nginx/docker-compose.yml
       service: nginx
+#  # песочница для проектов на node.js
 #  nodejs:
 #    extends:
 #      file: ./services/nodejs/docker-compose.yml
 #      service: nodejs
+  # веб-панель управления базами данных postgresql
   pgadmin:
     extends:
       file: ./services/pgadmin/docker-compose.yml
       service: pgadmin
+  # песочница для проектов на php
   php:
     extends:
       file: ./services/php/docker-compose.yml
       service: php
+  # веб-панель управления базами данных mysql
   phpmyadmin:
     extends:
       file: ./services/phpmyadmin/docker-compose.yml
       service: phpmyadmin
+#  # почтовый сервер
 #  poste:
 #    extends:
 #      file: ./services/poste/docker-compose.yml
 #      service: poste
+  # база данных postgresql
   postgres:
     extends:
       file: ./services/postgres/docker-compose.yml
       service: postgres
+#  # песочница для проектов на python
 #  python:
 #    extends:
 #      file: ./services/python/docker-compose.yml
 #      service: python
+#  # база данных redis
 #  redis:
 #    extends:
 #      file: ./services/redis/docker-compose.yml
 #      service: redis
+#  # веб-панель управления базами данных redis
 #  redis-commander:
 #    extends:
 #      file: ./services/redis-commander/docker-compose.yml
 #      service: redis-commander
+#  # компилятор кода с api-контроллером по веб-протоколу
+#  trainer:
+#    extends:
+#      file: ./services/trainer/docker-compose.yml
+#      service: trainer
 
 networks:
   network:
