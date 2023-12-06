@@ -1552,48 +1552,67 @@ POSTGRES_USER@POSTGRES_HOST.sql
 
 ### Дамп PostgreSQL
 
-**Вариант 1**
+**Сделать дамп**
 
 Выполните следующую команду на локальной машине:
 
 ```shell script
-docker exec -i postgres psql --username user_name database_name < /path/to/dump/pgsql-backup.sql 
+pg_dump -h PG_HOST -p PG_PORT -U PG_USER PG_DATABASE > /path/to/dump/dumpfile.sql
 ```
 
-или зайдите в контейнер postgres и выполните:
+**PG_USER** — имя пользователя. Значение *POSTGRES_USER*.
+
+**PG_DATABASE** — название базы данных. Значение *POSTGRES_DB*.
+
+Например:
 
 ```shell script
-psql --username user_name database_name < /path/to/dump/pgsql-backup.sql 
+pg_dump -h localhost -p 5432 -U postgres mydb > dumpfile.sql
 ```
 
-**user_name** — имя пользователя. Значение *POSTGRES_USER*.
+**Восстановить базу из дампа**
 
-**database_name** — название базы данных. Значение *POSTGRES_DB*.
-
-**Вариант 2**
-
-Из командной строки:
-
+```shell script
+psql -U PG_USER PG_DATABASE < /path/to/dump/dumpfile.sql 
 ```
-pg_dump -h PG_HOST -p PG_PORT -U PG_USER -F c -f dumpfile PG_DB
+
+Например:
+
+```shell script
+psql -U postgres mydb < dumpfile.sql 
+```
+
+**Выполнение команд**
+
+Эти команды вы можете выполнить разными способами:
+
+- зайти в контейнер postgres и ввести команду,
+- выполнить из командной строки с вызовом контейнера,
+- по ssh.
+
+Выполнить из командной строки с вызовом контейнера:
+
+```shell script
+docker exec -i postgres КОМАНДА
 ```
 
 По ssh:
 
 ```
-ssh LOGIN@SERVER_ADDRESS -p PORT 'pg_dump -h PG_HOST -p PG_PORT -U PG_USER -F c -f dumpfile PG_DB'
-scp -P PORT LOGIN@SERVER_ADDRESS:dumpfile.sql dumpfile.sql
-ssh LOGIN@SERVER_ADDRESS -p PORT 'rm dumpfile.sql'
+ssh LOGIN@SERVER_ADDRESS -p PORT 'КОМАНДА'
+scp -P PORT LOGIN@SERVER_ADDRESS:/path/to/dump/dumpfile.sql dumpfile.sql
+ssh LOGIN@SERVER_ADDRESS -p PORT 'rm /path/to/dump/dumpfile.sql'
 ```
 
-LOGIN
-SERVER_ADDRESS
-PORT
-PG_HOST
-PG_USER
-PG_PASSWORD
-PG_DB
-PG_PORT
+**LOGIN** — логин для подключения по ssh.
+
+**SERVER_ADDRESS** — имя сервера или его ip.
+
+**PORT** — порт сервера (если нужен).
+
+> При подключении по ssh сервер может потребовать ввести пароль!
+
+Здесь мы приводим три команды подряд. Первая создает дамп или восстанавливает базу из дампа. Вторая копирует файл дампа на локальную машину с удаленного сервера. А третья удаляет файл дампа с сервера, чтобы не засорять его лишним мусором.
 
 [^ к оглавлению](#оглавление)
 
