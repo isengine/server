@@ -65,6 +65,7 @@
   - [MongoDB](#mongodb)
     - [Структура MongoDB](#структура-mongodb)
     - [Дамп MongoDB](#дамп-mongodb)
+  - [Почтовый сервер iredmail](#почтовый-сервер-iredmail)
   - [Почтовый сервер Poste](#почтовый-сервер-poste)
   - [Почтовый сервер Mailcow](#почтовый-сервер-mailcow)
     - [Установка Mailcow](#установка-mailcow)
@@ -197,6 +198,7 @@ Adminer работает на 8800 порту: http://localhost:8800
     - redis-commander
   - mongo
 - почтовый сервер
+  - iredmail
   - poste
   - mailcow
 - прочие песочницы и компиляторы
@@ -218,6 +220,7 @@ Adminer работает на 8800 порту: http://localhost:8800
 │   ├── cpp
 │   ├── dbeaver
 │   ├── git
+│   ├── iredmail
 │   ├── mailcow
 │   ├── mongo
 │   ├── mysql
@@ -1692,6 +1695,16 @@ docker exec -it mongo sh
 ```shell script
 mongorestore -d database_name /dump/databases/database_name
 ```
+
+[^ к оглавлению](#оглавление)
+
+## Почтовый сервер iredmail
+
+Как вариант, мы предлагаем установить почтовый сервер iredmail.
+
+Он использует базу данных **mariadb** и разворачивается в **docker** контейнере.
+
+[Подробнее здесь](https://hub.docker.com/r/iredmail/mariadb)
 
 [^ к оглавлению](#оглавление)
 

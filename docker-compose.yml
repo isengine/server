@@ -22,6 +22,11 @@ services:
 #    extends:
 #      file: ./services/git/docker-compose.yml
 #      service: git
+#  # почтовый сервер
+#  iredmail:
+#    extends:
+#      file: ./services/iredmail/docker-compose.yml
+#      service: iredmail
 #  # база данных mongo db
 #  mongo:
 #    extends:
