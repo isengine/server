@@ -6,6 +6,7 @@ from types import SimpleNamespace
 from typing import List
 
 from aiohttp import web
+import aiohttp_cors
 from serverhub_agent.utils.filesystem import TempFileManager
 
 AGENT_PORT = os.getenv("PORT")
@@ -25,25 +26,27 @@ async def run(request: web.Request) -> web.Response:
     oom_killed = False
 
     async with run_lock:
-        with TempFileManager(directory=TESTS_PATH, files=files) as manager:
+        with TempFileManager(directory = TESTS_PATH, files = files) as manager:
             try:
                 proc = subprocess.Popen(
                     (
                         f"chown -R student {manager.directory} "
                         f"&& chown -R student /tmp/ "
                         f"&& chown -R student /home/student/ "
-                        f"&& su - student -c \"cd {manager.directory} && {body['command']}\" "
+                        f"&& su - student -c \"cd {manager.directory} "
+                        f"&& {body['command']}\" "
                     ),
                     stdin = subprocess.PIPE, 
                     stdout = subprocess.PIPE, 
                     stderr = subprocess.PIPE,
                     text = True,
-                    shell = True,
+                    shell = False,
+                    encoding = 'utf-8',
                 )
                 for input in stdin:
                     proc.stdin.write(str(input) + '\n')
                 std_out, std_err = proc.communicate(
-                    input = 'data_to_write',
+                    input = None,
                     timeout = TIMEOUT,
                 )
                 return_code = proc.returncode
@@ -67,8 +70,12 @@ async def run(request: web.Request) -> web.Response:
 
     result = {
         "exit_code": return_code,
-        "stdin": len(stdin),
-        "stdout": std_out.strip(),
+        "stdin": {
+            "count": len(stdin),
+            "input": input,
+            "stream": stdin,
+        },
+        "stdout": std_out,
         "stderr": std_err,
         # "stdout": stdout.decode(),
         # "stderr": stderr.decode(),
@@ -79,12 +86,21 @@ async def run(request: web.Request) -> web.Response:
 
     return web.json_response(result)
 
-def setup_routes(app: web.Application) -> None:
-    app.router.add_post("/run/", run)
-
 app = web.Application()
+cors = aiohttp_cors.setup(app)
+
+resource = cors.add(app.router.add_resource("/run"))
+route = cors.add(
+    resource.add_route("POST", run), {
+        "*": aiohttp_cors.ResourceOptions(
+            allow_credentials = True,
+            expose_headers = ("X-Custom-Server-Header",),
+            allow_headers = ("X-Requested-With", "Content-Type"),
+            max_age = 3600,
+        )
+    })
+
 run_lock = asyncio.Lock()
-setup_routes(app)
 logging.basicConfig(level=logging.DEBUG)
 
 web.run_app(

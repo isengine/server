@@ -6,13 +6,16 @@ services:
     build: .
     # restart: unless-stopped
     environment:
-      - PORT=${TRAINER_PORT}
+      - SOCKET=3990
+      - PORT=3999
       - TIMEOUT=30
     volumes:
-      - ./data:/app
-    command: python3 /app/launch.py
+      - ./data/app:/app
+      - ./data/unit:/unit
+    command: python /app/launch.py
     ports:
-      - ${TRAINER_PORT}:${TRAINER_PORT}
+      - 3990:3990
+      - 3999:3999
     networks:
       - network
 

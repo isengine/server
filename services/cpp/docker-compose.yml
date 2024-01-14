@@ -5,14 +5,13 @@ services:
   cpp:
     build: .
     environment:
-      - PORT=${CPP_PORT}
       - TZ=${WORKSPACE_TIMEZONE}
     volumes:
       - ./data:/app/src
     working_dir: /app/src
     stdin_open: true
     ports:
-      - ${CPP_PORT}:${CPP_PORT}
+      - 7000:7000
     networks:
       - network
 

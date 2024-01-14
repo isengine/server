@@ -3,15 +3,17 @@ server {
   listen        [::]:80;
   server_name   example.com www.example.com;
 
-  index index.php;
+  index index.html;
   error_log  /var/log/nginx/error.log;
   access_log /var/log/nginx/access.log;
-  error_page 404 /index.php;
-  root /var/www/example.com/public;
+  error_page 404 /404.html;
+  root /var/www/example.com;
 
   location / {
     try_files $uri @example.com;
+    gzip_static on;
   }
+
   location @example.com {
     proxy_pass http://python:8000;
     proxy_set_header Host $host;

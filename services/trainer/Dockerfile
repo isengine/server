@@ -1,22 +1,20 @@
 FROM python:3.9-slim
 
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install aiohttp aiohttp_cors serverhub_agent
+
 # Создаём отдельного пользователя для запуска кода
 RUN useradd -rm -d /home/student -s /bin/bash -u 1001 student
 
-# Установим Golang, ведь нам предстоит компилировать и запускать код на Go!
+# Установим библиотеки для языков
+# Go C++ Node.js
 RUN apt-get update && \
-apt-get install -y -q --no-install-recommends golang && \
-rm -rf /var/lib/apt/lists/
+    apt-get install -y -q --no-install-recommends \
+    golang \
+    gcc gcc-multilib g++ \
+    nodejs npm yarn && \
+    rm -rf /var/lib/apt/lists/*
 
-# Установим C++
-# ENV GCC_VERSION 10.2.1-1
-
-RUN apt-get update && \
-apt-get install -y --no-install-recommends gcc gcc-multilib g++ && \
-rm -rf /var/lib/apt/lists/*
-
-RUN pip install --no-cache-dir --upgrade pip
-RUN pip install aiohttp
-RUN pip install serverhub_agent
+# RUN npm install -g typescript @types/node @babylonjs/core
 
 WORKDIR /app
