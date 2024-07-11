@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+
+  mkcert:
+    build: .
+    restart: "no"
+    volumes:
+      - ./data:/root/.local/share/mkcert
+      - ../.certs:/var/mkcert
+    # command: >
+    #   sh -c "tail -f /dev/null"
+    networks:
+      - network
+
+# возможно, вам потребуется установить сертификат
+# ./data/rootCA.pem
+# в реестр доверенных корневых центров сертификации
+
+# запускать одной из команд
+# docker-compose run --rm mkcert example.com
+# docker-compose run --rm mkcert "example.com www.example.com *.example.com" example.com
+
+# в конфиг nginx добавить
+# listen 443 ssl http2;
+# listen [::]:443 ssl http2;
+# ssl_certificate /etc/.certs/example.com.crt;
+# ssl_certificate_key /etc/.certs/example.com.key;
+# опционально
+# ssl_trusted_certificate /etc/.certs/example.com.ca;
+
+networks:
+  network:
+    name: prod_network
+    external: true

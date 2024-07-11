@@ -12,6 +12,7 @@ services:
       - ./data/conf.d:/etc/nginx/conf.d
       - ./data/ssl:/etc/nginx/ssl
       - ./data/log:/var/log/nginx
+      - ../.certs:/etc/.certs
       - ../../projects:/var/www
     ports:
       - ${NGINX_PORT}:80

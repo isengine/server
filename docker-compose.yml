@@ -32,6 +32,11 @@ services:
 #    extends:
 #      file: ./services/mongo/docker-compose.yml
 #      service: mongo
+  # сервис выпуска сертификатов
+  mkcert:
+    extends:
+      file: ./services/mkcert/docker-compose.yml
+      service: mkcert
   # база данных mysql
   mysql:
     extends:
@@ -47,6 +52,11 @@ services:
 #    extends:
 #      file: ./services/nodejs/docker-compose.yml
 #      service: nodejs
+#  # генератор pdf из html
+#  pdf:
+#    extends:
+#      file: ./services/pdf/docker-compose.yml
+#      service: pdf
   # веб-панель управления базами данных postgresql
   pgadmin:
     extends:
@@ -87,6 +97,11 @@ services:
 #    extends:
 #      file: ./services/redis-commander/docker-compose.yml
 #      service: redis-commander
+#  # облачное хранилище
+#  s3:
+#    extends:
+#      file: ./services/s3/docker-compose.yml
+#      service: s3
 #  # компилятор кода с api-контроллером по веб-протоколу
 #  trainer:
 #    extends:

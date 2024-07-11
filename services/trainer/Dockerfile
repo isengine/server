@@ -10,6 +10,7 @@ RUN useradd -rm -d /home/student -s /bin/bash -u 1001 student
 # Go C++ Node.js
 RUN apt-get update && \
     apt-get install -y -q --no-install-recommends \
+    htop \
     golang \
     gcc gcc-multilib g++ \
     nodejs npm yarn && \

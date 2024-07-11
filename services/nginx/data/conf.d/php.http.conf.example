@@ -2,6 +2,12 @@ server {
   listen        80;
   listen        [::]:80;
 
+  # listen        443 ssl http2;
+  # listen        [::]:443 ssl http2;
+  # ssl_certificate           /etc/.certs/example.com.crt;
+  # ssl_certificate_key       /etc/.certs/example.com.key;
+  # ssl_trusted_certificate   /etc/.certs/example.com.ca;
+
   # listen        443 ssl;
   # ssl_certificate           /etc/nginx/ssl/example.com.crt;
   # ssl_certificate_key       /etc/nginx/ssl/example.com.key;

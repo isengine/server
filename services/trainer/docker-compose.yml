@@ -4,15 +4,21 @@ services:
 
   trainer:
     build: .
-    # restart: unless-stopped
+    init: true
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
     environment:
       - SOCKET=3990
       - PORT=3999
-      - TIMEOUT=30
+      - TIMEOUT=10
     volumes:
       - ./data/app:/app
       - ./data/unit:/unit
-    command: python /app/launch.py
+    command: python3 /app/launch.py
     ports:
       - 3990:3990
       - 3999:3999

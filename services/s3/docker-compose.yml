@@ -1,0 +1,31 @@
+version: "3.7"
+
+services:
+
+  s3:
+    image: efrecon/s3fs
+    restart: unless-stopped
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - 'apparmor:unconfined'
+    devices:
+      - /dev/fuse
+    environment:
+      AWS_S3_BUCKET: ${S3_BUCKET}
+      AWS_S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID}
+      AWS_S3_SECRET_ACCESS_KEY: ${S3_SECRET_ACCESS_KEY}
+      AWS_S3_URL: ${S3_URL}
+      AWS_S3_MOUNT: '/opt/s3fs/bucket'
+      S3FS_ARGS: -o use_path_request_style
+      GID: ${S3_GROUP_ID}
+      UID: ${S3_USER_ID}
+    volumes:
+      - ./data:/opt/s3fs/bucket:rshared
+    networks:
+      - network
+
+networks:
+  network:
+    name: prod_network
+    external: true
