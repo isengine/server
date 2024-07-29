@@ -32,16 +32,21 @@ services:
 #    extends:
 #      file: ./services/locust/docker-compose.yml
 #      service: locust
-#  # база данных mongo db
-#  mongo:
+#  # облачное хранилище
+#  minio:
 #    extends:
-#      file: ./services/mongo/docker-compose.yml
-#      service: mongo
+#      file: ./services/minio/docker-compose.yml
+#      service: minio
   # сервис выпуска сертификатов
   mkcert:
     extends:
       file: ./services/mkcert/docker-compose.yml
       service: mkcert
+#  # база данных mongo db
+#  mongo:
+#    extends:
+#      file: ./services/mongo/docker-compose.yml
+#      service: mongo
   # база данных mysql
   mysql:
     extends:
@@ -102,11 +107,6 @@ services:
 #    extends:
 #      file: ./services/redis-commander/docker-compose.yml
 #      service: redis-commander
-#  # облачное хранилище
-#  s3:
-#    extends:
-#      file: ./services/s3/docker-compose.yml
-#      service: s3
 #  # компилятор кода с api-контроллером по веб-протоколу
 #  trainer:
 #    extends:
