@@ -32,6 +32,12 @@ services:
 #      file: ./services/iredmail/docker-compose.yml
 #      service: iredmail
 
+#  # jupyter hub
+#  jupyterhub:
+#    extends:
+#      file: ./services/jupyterhub/docker-compose.yml
+#      service: jupyterhub
+
 #  # нагрузочное тестирование
 #  locust:
 #    extends:
