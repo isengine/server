@@ -12,15 +12,13 @@ services:
           cpus: '1'
           memory: 512M
     environment:
-      - SOCKET=3990
       - PORT=3999
-      - TIMEOUT=10
+      - TIMEOUT=60
     volumes:
       - ./data/app:/app
       - ./data/unit:/unit
     command: python3 /app/launch.py
     ports:
-      - 3990:3990
       - 3999:3999
     networks:
       - network

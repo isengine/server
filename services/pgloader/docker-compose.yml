@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+
+  pgloader:
+    image: dimitri/pgloader:latest
+    env_file:
+      - ../../.env
+    networks:
+      - network
+
+networks:
+  network:
+    name: prod_network
+    external: true

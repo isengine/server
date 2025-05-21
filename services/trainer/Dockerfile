@@ -1,7 +1,9 @@
 FROM python:3.9-slim
 
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install aiohttp aiohttp_cors serverhub_agent
+    pip install aiohttp aiohttp_cors serverhub_agent \
+                matplotlib numpy opencv-python opencv-python-headless \
+                tensorflow ultralytics
 
 # Создаём отдельного пользователя для запуска кода
 RUN useradd -rm -d /home/student -s /bin/bash -u 1001 student

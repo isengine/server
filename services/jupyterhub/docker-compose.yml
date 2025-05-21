@@ -1,0 +1,18 @@
+services:
+
+  jupyterhub:
+    image: quay.io/jupyterhub/jupyterhub
+    restart: unless-stopped
+    env_file:
+      - ../../.env
+    volumes:
+      - ./data:/srv/jupyterhub
+    ports:
+      - 10001:8000
+    networks:
+      - network
+
+networks:
+  network:
+    name: prod_network
+    external: true

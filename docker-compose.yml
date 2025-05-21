@@ -7,106 +7,151 @@ services:
     extends:
       file: ./services/adminer/docker-compose.yml
       service: adminer
+
 #  # песочница для проектов на c++
 #  cpp:
 #    extends:
 #      file: ./services/cpp/docker-compose.yml
 #      service: cpp
+
 #  # облачное приложения управления базами данных
 #  dbeaver:
 #    extends:
 #      file: ./services/dbeaver/docker-compose.yml
 #      service: dbeaver
+
 #  # система контроля версий gitlab
 #  git:
 #    extends:
 #      file: ./services/git/docker-compose.yml
 #      service: git
+
 #  # почтовый сервер
 #  iredmail:
 #    extends:
 #      file: ./services/iredmail/docker-compose.yml
 #      service: iredmail
+
 #  # нагрузочное тестирование
 #  locust:
 #    extends:
 #      file: ./services/locust/docker-compose.yml
 #      service: locust
+
+#  # почтовый сервер
+#  mailcow:
+#    extends:
+#      file: ./services/mailcow/docker-compose.yml
+#      service: mailcow
+
 #  # облачное хранилище
 #  minio:
 #    extends:
 #      file: ./services/minio/docker-compose.yml
 #      service: minio
+
   # сервис выпуска сертификатов
   mkcert:
     extends:
       file: ./services/mkcert/docker-compose.yml
       service: mkcert
+
 #  # база данных mongo db
 #  mongo:
 #    extends:
 #      file: ./services/mongo/docker-compose.yml
 #      service: mongo
+
   # база данных mysql
   mysql:
     extends:
       file: ./services/mysql/docker-compose.yml
       service: mysql
+
+#  # облачное хранилище
+#  nextcloud:
+#    extends:
+#      file: ./services/nextcloud/docker-compose.yml
+#      service: nextcloud
+
   # сервер nginx
   nginx:
     extends:
       file: ./services/nginx/docker-compose.yml
       service: nginx
+
 #  # песочница для проектов на node.js
 #  nodejs:
 #    extends:
 #      file: ./services/nodejs/docker-compose.yml
 #      service: nodejs
+
 #  # генератор pdf из html
 #  pdf:
 #    extends:
 #      file: ./services/pdf/docker-compose.yml
 #      service: pdf
+
   # веб-панель управления базами данных postgresql
   pgadmin:
     extends:
       file: ./services/pgadmin/docker-compose.yml
       service: pgadmin
+
+#  # сервис миграции баз данных
+#  pgloader:
+#    extends:
+#      file: ./services/pgloader/docker-compose.yml
+#      service: pgloader
+
   # песочница для проектов на php
   php:
     extends:
       file: ./services/php/docker-compose.yml
       service: php
+
   # веб-панель управления базами данных mysql
   phpmyadmin:
     extends:
       file: ./services/phpmyadmin/docker-compose.yml
       service: phpmyadmin
+
 #  # почтовый сервер
 #  poste:
 #    extends:
 #      file: ./services/poste/docker-compose.yml
 #      service: poste
+
   # база данных postgresql
   postgres:
     extends:
       file: ./services/postgres/docker-compose.yml
       service: postgres
+
 #  # песочница для проектов на python
 #  python:
 #    extends:
 #      file: ./services/python/docker-compose.yml
 #      service: python
+
 #  # база данных redis
 #  redis:
 #    extends:
 #      file: ./services/redis/docker-compose.yml
 #      service: redis
+
 #  # веб-панель управления базами данных redis
 #  redis-commander:
 #    extends:
 #      file: ./services/redis-commander/docker-compose.yml
 #      service: redis-commander
+
+#  # облачное хранилище
+#  s3:
+#    extends:
+#      file: ./services/s3/docker-compose.yml
+#      service: s3
+
 #  # компилятор кода с api-контроллером по веб-протоколу
 #  trainer:
 #    extends:
