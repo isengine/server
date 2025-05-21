@@ -1,0 +1,56 @@
+version: "3"
+
+services:
+
+  vllm:
+    image: vllm/vllm-openai:latest
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - HUGGING_FACE_HUB_TOKEN=
+      # - NVIDIA_VISIBLE_DEVICES=0
+      # - NCCL_IGNORE_DISABLED_P2P=1
+    restart: unless-stopped
+    runtime: nvidia
+    env_file:
+      - ../../.env
+    # volumes:
+    #   - ./data:/root/.ollama
+    volumes:
+      - ./data:/root/.cache/huggingface
+    # - ./data/workspace:/workspace
+    # - ./data/vllm-workspace:/vllm-workspace
+    # command: ["--model", "Qwen/Qwen2-VL-7B-Instruct", "--host", "0.0.0.0", "--port", "8000"]
+    ipc: host
+    tty: true
+    entrypoint: python3
+    # entrypoint: python3 -m vllm.entrypoints.openai.api_server
+    # command: --port=8000 --host=0.0.0.0 --model=deepseek-ai/Janus-Pro-1B
+    # command: --port=8000 --host=0.0.0.0 --model=Qwen/Qwen2.5-1.5B-Instruct
+    # command: --port=8000 --host=0.0.0.0 --model=Qwen/Qwen2.5-VL-3B-Instruct
+    # command: --port=8000 --host=0.0.0.0 --model=bartowski/Qwen_Qwen2.5-VL-7B-Instruct-GGUF
+    # command: -m vllm.entrypoints.openai.api_server --port=11410 --host=0.0.0.0 ${H2OGPT_VLLM_ARGS}
+    # command: -m vllm.entrypoints.openai.api_server --port=8000 --host=0.0.0.0 --model=Qwen/Qwen2-VL-7B-Instruct
+    # healthcheck:
+    #   test: [ "CMD", "curl", "-f", "http://0.0.0.0:11410/v1/models" ]
+    #   interval: 30s
+    #   timeout: 5s
+    #   retries: 20
+    ports:
+      - 11410:8000
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: ["gpu"]
+              count: all
+              # count: 1
+              # options:
+              #   com.nvidia.cuda.visible_devices: "0"
+    networks:
+      - network
+
+networks:
+  network:
+    name: prod_network
+    external: true

@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+
+  qwenvl:
+    image: qwenllm/qwenvl:2.5-cu121
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    restart: no
+    runtime: nvidia
+    env_file:
+      - ../../.env
+    # volumes:
+    #   - ./data:/build/models
+    ipc: host
+    command: ["bash"]
+    tty: true
+    ports:
+      - 11440:8000
+      - 11448:8080
+      # - 8080:8080
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: ["gpu"]
+              count: all
+              # count: 1
+              # options:
+              #   com.nvidia.cuda.visible_devices: "0"
+    networks:
+      - network
+
+networks:
+  network:
+    name: prod_network
+    external: true

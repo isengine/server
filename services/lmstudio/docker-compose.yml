@@ -2,26 +2,21 @@ version: "3"
 
 services:
 
-  python:
+  lmstudio:
     build: .
     environment:
-      - TZ=${WORKSPACE_TIMEZONE}
-      - PYTHONDONTWRITEBYTECODE=1
-      - PYTHONUNBUFFERED=1
       - NVIDIA_VISIBLE_DEVICES=all
+      # - NVIDIA_VISIBLE_DEVICES=0
+    # restart: unless-stopped
     runtime: nvidia
+    tty: true
+    restart: no
     env_file:
       - ../../.env
     volumes:
-      - ../.ssh:/.ssh
-      - ../../projects/:/var/www
-    working_dir: /var/www
-    tty: true
-    restart: no
-    stdin_open: true
-    # command: gunicorn -w 4 script:app
+      - ./data:/app
     ports:
-      - 8000:8000
+      - 11400:11400
     deploy:
       resources:
         reservations:
@@ -40,5 +35,5 @@ services:
 
 networks:
   network:
-    name: ai_network
+    name: prod_network
     external: true

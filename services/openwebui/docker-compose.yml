@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:cuda
+    # image: ghcr.io/open-webui/open-webui:main
+    restart: unless-stopped
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      # - NVIDIA_VISIBLE_DEVICES=0
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+    env_file:
+      - ../../.env
+    volumes:
+      - ./data:/app/backend/data
+    ports:
+      - 11435:8080
+    networks:
+      - network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: ["gpu"]
+              count: all 
+              # count: 1
+              # options:
+              #   com.nvidia.cuda.visible_devices: "0"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - ollama
+
+networks:
+  network:
+    name: prod_network
+    external: true

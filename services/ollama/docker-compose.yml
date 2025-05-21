@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+
+  ollama:
+    image: ollama/ollama:latest
+    # image: ollama/ollama:rocm
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      # - NVIDIA_VISIBLE_DEVICES=0
+      - OLLAMA_LOAD_TIMEOUT=120000000
+      - OLLAMA_KEEP_ALIVE=24h
+    restart: unless-stopped
+    env_file:
+      - ../../.env
+    volumes:
+      - ./data:/root/.ollama
+    ports:
+      - 11434:11434
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: ["gpu"]
+              count: all
+              # count: 1
+              # options:
+              #   com.nvidia.cuda.visible_devices: "0"
+    networks:
+      - network
+
+networks:
+  network:
+    name: prod_network
+    external: true

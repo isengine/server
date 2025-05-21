@@ -1,8 +1,0 @@
-server {
-  listen        8080;
-  server_name   example.com;
-  location / {
-    proxy_pass  http://nodejs:8080/;
-    include     /etc/nginx/conf.d/proxy.params.conf;
-  }
-}

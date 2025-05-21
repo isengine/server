@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+
+  sd-webui-forge:
+    image: ghcr.io/yummiii/sd-webui-forge-docker:cuda-12.4.1
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      # - NVIDIA_VISIBLE_DEVICES=0
+      - "ARGS=--api --listen --enable-insecure-extension-access"
+      # - COMMANDLINE_ARGS=...
+      - UI=forge
+    restart: unless-stopped
+    env_file:
+      - ../../.env
+    volumes:
+      - ./data:/app/sd-webui
+    ports:
+      - 7860:7860
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: ["gpu"]
+              count: all 
+              # count: 1
+              # options:
+              #   com.nvidia.cuda.visible_devices: "0"
+    networks:
+      - network
+
+networks:
+  network:
+    name: prod_network
+    external: true

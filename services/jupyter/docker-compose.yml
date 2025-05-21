@@ -1,0 +1,26 @@
+services:
+
+  jupyter:
+    image: quay.io/jupyter/scipy-notebook
+    # image: jupyter/base-notebook
+    restart: unless-stopped
+    environment:
+       - DOCKER_STACKS_JUPYTER_CMD=notebook
+    env_file:
+      - ../../.env
+    volumes:
+      - ./data:/home/jovyan/work
+    ports:
+      - 10000:8888
+    networks:
+      - network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+
+networks:
+  network:
+    name: ai_network
+    external: true

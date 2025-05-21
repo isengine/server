@@ -2,163 +2,62 @@ version: "3"
 
 services:
 
-  # веб-панель управления базами данных
-  adminer:
+  comfyui:
     extends:
-      file: ./services/adminer/docker-compose.yml
-      service: adminer
+      file: ./services/comfyui/docker-compose.yml
+      service: comfyui
 
-#  # песочница для проектов на c++
-#  cpp:
-#    extends:
-#      file: ./services/cpp/docker-compose.yml
-#      service: cpp
-
-#  # облачное приложения управления базами данных
-#  dbeaver:
-#    extends:
-#      file: ./services/dbeaver/docker-compose.yml
-#      service: dbeaver
-
-#  # система контроля версий gitlab
-#  git:
-#    extends:
-#      file: ./services/git/docker-compose.yml
-#      service: git
-
-#  # почтовый сервер
-#  iredmail:
-#    extends:
-#      file: ./services/iredmail/docker-compose.yml
-#      service: iredmail
-
-#  # нагрузочное тестирование
-#  locust:
-#    extends:
-#      file: ./services/locust/docker-compose.yml
-#      service: locust
-
-#  # почтовый сервер
-#  mailcow:
-#    extends:
-#      file: ./services/mailcow/docker-compose.yml
-#      service: mailcow
-
-#  # облачное хранилище
-#  minio:
-#    extends:
-#      file: ./services/minio/docker-compose.yml
-#      service: minio
-
-  # сервис выпуска сертификатов
-  mkcert:
+  jupyter:
     extends:
-      file: ./services/mkcert/docker-compose.yml
-      service: mkcert
+      file: ./services/jupyter/docker-compose.yml
+      service: jupyter
 
-#  # база данных mongo db
-#  mongo:
-#    extends:
-#      file: ./services/mongo/docker-compose.yml
-#      service: mongo
-
-  # база данных mysql
-  mysql:
+  llm:
     extends:
-      file: ./services/mysql/docker-compose.yml
-      service: mysql
+      file: ./services/llm/docker-compose.yml
+      service: llm
 
-#  # облачное хранилище
-#  nextcloud:
-#    extends:
-#      file: ./services/nextcloud/docker-compose.yml
-#      service: nextcloud
-
-  # сервер nginx
-  nginx:
+  lmstudio:
     extends:
-      file: ./services/nginx/docker-compose.yml
-      service: nginx
+      file: ./services/lmstudio/docker-compose.yml
+      service: lmstudio
 
-#  # песочница для проектов на node.js
-#  nodejs:
-#    extends:
-#      file: ./services/nodejs/docker-compose.yml
-#      service: nodejs
-
-#  # генератор pdf из html
-#  pdf:
-#    extends:
-#      file: ./services/pdf/docker-compose.yml
-#      service: pdf
-
-  # веб-панель управления базами данных postgresql
-  pgadmin:
+  localai:
     extends:
-      file: ./services/pgadmin/docker-compose.yml
-      service: pgadmin
+      file: ./services/localai/docker-compose.yml
+      service: localai
 
-#  # сервис миграции баз данных
-#  pgloader:
-#    extends:
-#      file: ./services/pgloader/docker-compose.yml
-#      service: pgloader
-
-  # песочница для проектов на php
-  php:
+  ollama:
     extends:
-      file: ./services/php/docker-compose.yml
-      service: php
+      file: ./services/ollama/docker-compose.yml
+      service: ollama
 
-  # веб-панель управления базами данных mysql
-  phpmyadmin:
+  openwebui:
     extends:
-      file: ./services/phpmyadmin/docker-compose.yml
-      service: phpmyadmin
+      file: ./services/openwebui/docker-compose.yml
+      service: openwebui
 
-#  # почтовый сервер
-#  poste:
-#    extends:
-#      file: ./services/poste/docker-compose.yml
-#      service: poste
-
-  # база данных postgresql
-  postgres:
+  python:
     extends:
-      file: ./services/postgres/docker-compose.yml
-      service: postgres
+      file: ./services/python/docker-compose.yml
+      service: python
 
-#  # песочница для проектов на python
-#  python:
-#    extends:
-#      file: ./services/python/docker-compose.yml
-#      service: python
+  qwenvl:
+    extends:
+      file: ./services/qwenvl/docker-compose.yml
+      service: qwenvl
 
-#  # база данных redis
-#  redis:
-#    extends:
-#      file: ./services/redis/docker-compose.yml
-#      service: redis
+  sd-webui-forge:
+    extends:
+      file: ./services/sd-webui-forge/docker-compose.yml
+      service: sd-webui-forge
 
-#  # веб-панель управления базами данных redis
-#  redis-commander:
-#    extends:
-#      file: ./services/redis-commander/docker-compose.yml
-#      service: redis-commander
-
-#  # облачное хранилище
-#  s3:
-#    extends:
-#      file: ./services/s3/docker-compose.yml
-#      service: s3
-
-#  # компилятор кода с api-контроллером по веб-протоколу
-#  trainer:
-#    extends:
-#      file: ./services/trainer/docker-compose.yml
-#      service: trainer
+  vllm:
+    extends:
+      file: ./services/vllm/docker-compose.yml
+      service: vllm
 
 networks:
   network:
-    name: prod_network
+    name: ai_network
     driver: bridge
