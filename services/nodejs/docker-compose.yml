@@ -7,18 +7,23 @@ services:
     restart: unless-stopped
     env_file:
       - ../../.env
+    environment:
+      - ANDROID_HOME=/home/node/sdk
     volumes:
+      - ./data:/home/node
       - ../../projects:/var/www
     working_dir: /var/www
     # command: >
     #   bash -c "yarn && yarn start"
+    tty: true
     ports:
       - 3000:3000
-      - 8080:8080
+      - 8090:8080
+      - 8091:8081
     networks:
       - network
 
 networks:
   network:
-    name: prod_network
+    name: lms_network
     external: true
