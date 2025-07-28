@@ -21,5 +21,5 @@ services:
 
 networks:
   network:
-    name: lms_network
+    name: prod_network
     external: true
